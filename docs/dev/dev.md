@@ -34,6 +34,7 @@ Question 1. What are the names and values of the top `num` countries with the hi
         3. Bhutan: 0.165264277
         4. North Korea: 0.16457043
         5. Bangladesh: 0.133546667
+
 Question 2. What are the numbers of countries, minimum, maximum, and average values for
 *Ozone*?
 
@@ -44,7 +45,7 @@ Question 2. What are the numbers of countries, minimum, maximum, and average val
         Maximum: 0.333468983
         Average: 0.023906429
 
-Question 3. Given the iilast `num` countries below the average for `category`.
+Question 3. Given the last `num` countries below the average for `category`.
 What country is the median in that set?
 
     * Algorithms: selection sort, average, count
