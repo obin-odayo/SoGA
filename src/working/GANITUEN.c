@@ -39,7 +39,7 @@
         a. struct data type
 	    b. file processing functions such as fopen(), fclose(), etc.
 	7. Do NOT use library functions that were NOT discussed in our class.
- /
+*/
 
 
 /*
@@ -69,15 +69,62 @@
     may not be easy to understand to the person reading the codes. 
 */
 
- Q1  
+/*
+questionOne
+    purpose: get the top nNumCountries of nCategory and return the output (which is a string) to a pointer sOutput.
+
+    params:
+    - nNumCountries [int]: number of countries which have the highest value for the category.
+    - nCategory [int]: the category number.
+    - *sOutput [ptr, string]: the output of the function.
+
+*/
+char *questionOne(int nNumCountries, int nCategory, char *sOutput){
+
+    /* Personal Notes:
+        - Always exclude GLOBAL from countrues!
+    */
+
+    
+
+    strcpy(sOutput, "Hello World");
+    return sOutput;
+}  
 
 int
 main()
 {
     /* Declare your own local variables. Describe the purpose of your local variables. */
-
-    printf("%lf", china[0]);
     
+    /* Miscelaneous variables*/
+
+    /* this long variable is for showing the categories to the user
+    to make it easier for them to pick one */
+    char sShowCategories[480] = "1: Baseline Life Expectancy\n2: Air Pollution\n3: Ambient PM\n4: Ozone\n5: Household AP\n6: Environmental Occupational Hazard\n7: Occupational Hazard\n8: Unsafe Hand Washing\n9: Metabolic Syndrome\n10: Deitary\n11: High Fasting Plasma Glucose/Sugar\n12: Tobacco\n13: Smoking\n14: Secondhand Smoke\n15: Unsafe Sex";
+    
+    /* Variables for question 1 */
+    int nNumCountries; // how many countries the question will print.
+    int nCategory; // the category the user chose for question 1.
+    char sOneOutput[640]; // the output of question one.
+
+    printf("Question 1. What are the names and values of the top `num` countries with the highest `category`?\n");
+
+
+    // get the user inputs for the parameters of questionOne();
+
+    printf("How many countries do you want to print?\n>. (int) ");
+    scanf("%d", &nNumCountries);
+
+    // print out the categories for the user.
+    printf("\n=====\n%s\n=====\n", sShowCategories); 
+    printf("What category do you want to use?\n>. (int) ");
+    scanf("%d", &nCategory);
+
+    // execute the function and print the result out.    
+    questionOne(nNumCountries, nCategory, sOneOutput);
+    
+    printf("%s", sOneOutput);
+
     /* 
        Call the function that answers a question. Thereafter, use printf() to print the question 
        and the corresponding answer.  For example:

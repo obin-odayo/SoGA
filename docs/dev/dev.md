@@ -53,12 +53,13 @@ What country is the median in that set?
         (let: num = 5, category = Dietary)
         Median: 0.86999776
 
-Question 4. Is `country`'s `category` above the average?
+Question 4. Is the Philippine's `category` above the average?
 
     * Algorithms: average
     * Expected Answer:
         (let: country = Philippines, category = Air Pollution)
         Yes
+
 Question 5. Does the mode of the data in Ambient PM ever repeat?
 
     * Algorithms: Binary Search
