@@ -8,19 +8,19 @@ LASTNAME1, FIRSTNAME1: Ganituen, Zhean Robby               SECTION1: S11A
 Encode your questions below.  Indicate as well the algorithm(s) to be used in answering each question.
 Questions with parameter(s) should have the parameter(s) encoded in angled brackets, for example, <parameter-name>. 
 
-Q1: What are the names and values of the top `num` countries with the highest `category`? 
+Q1: What are the names and values of the top <num> countries with the highest <category>? 
     [algorithm(s): selection sort, maximum]
 
 Q2: What are the numbers of countries, minimum, maximum, and average values for Ozone? 
     [algorithm(s): count, minimum, maximum, and average]
 
-Q3: Given the last `num` countries below the average for `category`. What country is the median in that set? 
+Q3: Given the last <num> countries below the average for <category>. What country is the median in that set? 
     [algorithm(s): selection sort, average, count]
 
-Q4: Is `country`'s `category` above the average? 
+Q4: Is <country>'s <category> above the average? 
     [algorithm(s): average]
 
-Q5: Does the mode of the data in Ambient PM ever repeat? 
+Q5: Are there data in <category> that repeats? 
     [algorithm(s): binary search]
 
 
@@ -45,4 +45,7 @@ A3: (let: num = 5, category = Dietary)
 A4: (let: country = Philippines, category = Air Pollution)
     Yes
 
-A5: No
+A5: (let: category = Ambient PM)
+    No. None of the data for 'Ambient PM' repeat.
+
+    Note. General format for key parameter NOT FOUND: "No. None of the data for '<category>' repeat."
