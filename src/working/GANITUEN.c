@@ -71,6 +71,24 @@ typedef char String[32];
 */
 
 /*
+swap
+    purpose: swap the positions of x and y.
+
+    params:
+    - double *x [double *]: pointer for double x
+    - double *y [double *]: pointer for double y
+
+    return:
+    - none
+*/
+void swap(double *x, double *y)
+{
+    double temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+/*
 questionOne
     purpose: get the top nNumCountries of nCategory and return the output (which is a string) to a pointer sOutput.
 
@@ -83,14 +101,13 @@ questionOne
     - none
 
 */
-void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String countries[], double topData[2][COUNTRIES_COUNT])
+void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String countries[], double topData[num][2])
 {
 
     /*
         Algorithm for implementation:
-        Part 1. Determine which category was selected.
-        Part 2. Sort the data values of all countries for the category selected.
-        Part 3. Given the sorted array, include the country name and value in `topCountries` if it is in the top
+        Part 1. Sort the data values of all countries for the category selected.
+        Part 2. Given the sorted array, include the country name and value in `topCountries` if it is in the top
           `num` of countries for that category.
     */
 
@@ -102,25 +119,66 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
 
     /*
         Part 1.
-        - Use Row-Major to determine the category.
-        - There are 15 (SOGA_COUNT / COUNTRIES_COUNT) columns in the SOGA data set
-          (excluding names of Countries).
-        - The total number of columns is the total number of countries
+        Sort the values of the array.
 
+        REMEMBER. Exclude SOGA[0] because that is the global data.
     */
     int row;                      // used in the for loops
     double temp[COUNTRIES_COUNT]; // Temporary array
 
-    for (row = 0; row < COUNTRIES_COUNT; row++)
+    for (row = 0; row < COUNTRIES_COUNT - 1; row++)
     {   
         // Since the column of the category is a constant.
         // We only need to check all the rows of that specific category.
-        temp[row] = SOGA[row][category];
+        temp[row] = SOGA[row + 1][category];
     }
 
-    // TO DO: Selection sort
+    int min; // minimum variable in the array
+    int i; // for loop for selection sort 
 
+    for (row = 0; row < COUNTRIES_COUNT; row++)
+    {
+        min = row;
+        
+        for (i = row; i < COUNTRIES_COUNT; i++)
+        {   
+            // sort in decreasing order so we use > not <
+            if (temp[i] > temp[min])
+            {
+                min = i;
+            }
+        }
+        // swap the positions
+        swap(&temp[min], &temp[row]);
+    }
 
+    /*
+        Part 2.
+        Only put the top num data in the final array.
+    */
+
+    // Extract the top num in temp and put it in topData
+    int j; // data used in for loop
+
+    for (i = 0; i < num; i++){
+        // The second row of topData is for the variables of the country for the category.
+        topData[i][1] = temp[i];
+    }
+
+    // Determine what the country name is for the specific data.
+    for (i = 0; i < num; i++){
+        for (j = 0; j < COUNTRIES_COUNT - 1; j++){
+            if (topData[i][1] == SOGA[j + 1][category])
+            {
+                // The first row of topData is for the country names that are selected.
+                topData[i][0] = (double) (j);
+            }
+        }
+    }
+
+    for (i = 0; i < num; i++){
+        printf("%d .. %.2lf\n", (int) topData[i][0], topData[i][1]);
+    }
 }
 
 int main()
@@ -134,7 +192,6 @@ int main()
           EXCLUDE countries[0] because that is "Global".
     */
     String countries[COUNTRIES_COUNT] = {
-        "Global",
         "China",
         "North_Korea",
         "Taiwan",
@@ -337,6 +394,8 @@ int main()
         "Tuvalu",
         "South_Sudan",
         "Sudan"};
+
+
 
     /* Remark on SOGA.
           Each country including "Global" has 15 categories.
@@ -553,7 +612,6 @@ int main()
     /* Variables for question 1 */
     int nNumCountries;                   // how many countries the question will print.
     int nCategory;                       // the category the user chose for question 1.
-    double sOneOutput[2][nNumCountries]; // output of question one.
 
     // ===== QUESTION 1
     printf("Question 1. What are the names and values of the top `num` countries with the highest `category`?\n");
@@ -561,6 +619,7 @@ int main()
 
     printf("How many countries do you want to print?\n>. (int) ");
     scanf("%d", &nNumCountries);
+    double sOneOutput[nNumCountries][2];              // output of question one.
 
     // print out the categories for the user.
     printf("\n=====\n%s\n=====\n", sShowCategories);
