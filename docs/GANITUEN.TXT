@@ -17,11 +17,11 @@ Q2: What are the numbers of countries, minimum, maximum, and average values for 
 Q3: Given the first <num> countries below the average for <category>. What country is the median in that set? 
     [algorithm(s): selection sort, average, count]
 
-Q4: Given the sorted data for <category> what are the countries  above and below the data of <country>.
-    [algorithm(s): selection sort,  linear search]
+Q4: Given the sorted data for <category> what are the countries above and below the data of <country>.
+    [algorithm(s): selection sort, linear search]
 
-Q5: Are there data in <category> that repeats? 
-    [algorithm(s): binary search]
+Q5: In <category>, what is the position of <country>'s data value if is sorted in increasing order?
+    [algorithm(s): selection sort, binary search]
 
 
 Encode the expected answers to the questions below. For question with parameter(s), indicate explicitly the
@@ -47,7 +47,7 @@ A4: (let: country = Mozambique, category = Baseline Life Expectancy)
     Philippines: 71.79842
     Below: Eswatini, 58.18399
 
-A5: (let: category = Ambient PM)
+A5: (let: country = China, Category = Baseline Life Expectancy)
     No. None of the data for 'Ambient PM' repeat.
 
     Note. General format for key parameter NOT FOUND: "No. None of the data for '<category>' repeat."

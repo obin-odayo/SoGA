@@ -26,7 +26,7 @@
 
 /* Declared Constants */
 #define COUNTRIES_COUNT 203 // in using COUNTRIES_COUNT, always subtract it by one since this includes "Global"
-#define SOGA_COUNT 3045 // SOGA_COUNT / COUNTRIES_COUNT should always be 15
+#define SOGA_COUNT 3045     // SOGA_COUNT / COUNTRIES_COUNT should always be 15
 
 /*
     HARD REQUIREMENTS: NON-COMPLIANCE WILL MAKE YOUR SOLUTION INCORRECT or CAUSE POINT DEDUCTIONS!
@@ -71,7 +71,7 @@ typedef char String[32];
 */
 
 /* swap
-    
+
     purpose: swap the positions of x and y.
 
     params:
@@ -89,7 +89,9 @@ void swap(double *x, double *y)
 }
 
 /* removeGbl
-    
+
+    purpose: remove global column in SOGA array.
+
     params:
     - SOGA [double *]: original SOGA array.
     - noGlobal [double *]: new array where the SOGA without a global will be stored.
@@ -97,13 +99,14 @@ void swap(double *x, double *y)
     return:
     - none
 */
-void removeGbl(double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double noGlobal[][SOGA_COUNT/COUNTRIES_COUNT])
+void removeGbl(double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], double noGlobal[][SOGA_COUNT / COUNTRIES_COUNT])
 {
-    int i,j; // used for for loops
+    int i, j; // used for for loops
 
     // loop from 0 to COUNTRIES_COUNT - 1 (see comment [1] in this function as to why that is)
-    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
-        for (j = 0; j < SOGA_COUNT/COUNTRIES_COUNT; j++)
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
+        for (j = 0; j < SOGA_COUNT / COUNTRIES_COUNT; j++)
         {
             // [1] notice here that SOGA[i + 1] is used.
             // Recall that COUNTRIES_COUNT = 203.
@@ -118,6 +121,8 @@ void removeGbl(double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double noGlobal[][SOGA
 
 /* filterCat
 
+    purpose: create an array that only contains the variables of one category.
+
     params:
     - SOGA [double *]: original SOGA array.
     - filter [doube *]: SOGA array that only contains a specific category.
@@ -126,15 +131,51 @@ void removeGbl(double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double noGlobal[][SOGA
     return:
     - none
 */
-void filterCat(double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double filter[COUNTRIES_COUNT], int category)
+void filterCat(double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], double filter[COUNTRIES_COUNT], int category)
 {
     int i;
 
-    for (i = 0; i < COUNTRIES_COUNT; i++){
+    for (i = 0; i < COUNTRIES_COUNT; i++)
+    {
         // Since the column of the category is a constant.
         // We only need to check all the rows of that specific category.
         filter[i] = SOGA[i][category];
     }
+}
+
+/* binSearch
+
+    purpose: binary search.
+
+    params:
+    - array[] [double]: a 1d double array that will be binary searched.
+    - size [int]: size of array.
+    - target [double]: target of binary search.
+
+    returns:
+    - mid [int]: index of target in array.
+    - -1 [int]: if index not found.
+
+*/
+int binSearch(double array[COUNTRIES_COUNT - 1], int size, double target)
+{
+    int low = 0;
+    int mid;
+    int high = size - 1;
+
+    while (low <= high)
+    {
+        mid = low + (high - low) / 2;
+
+        if (array[mid] == target)
+            return mid;
+        else if (array[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return -1;
 }
 
 /* questionOne
@@ -152,7 +193,7 @@ void filterCat(double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double filter[COUNTRIE
     - none
 
 */
-void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String countries[], double topData[num][2])
+void questionOne(int num, int category, double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], String countries[], double topData[num][2])
 {
 
     /*
@@ -168,8 +209,8 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         Part 1.
         Sort the values of the array.
     */
-    int row;                      // used in the for loops
-    double sorted[COUNTRIES_COUNT]; // temporary array that will be sorted
+    int row;                          // used in the for loops
+    double sorted[COUNTRIES_COUNT];   // temporary array that will be sorted
     double unsorted[COUNTRIES_COUNT]; // temporary array that won't be sorted
 
     // using filterCat, create a 1d array with only the relevant data values of the selected category
@@ -178,15 +219,15 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
     filterCat(SOGA, sorted, category);
     filterCat(SOGA, unsorted, category);
 
-    int min; // minimum variable in the array
-    int i, j; // for loop of selection sort and country 
+    int min;  // minimum variable in the array
+    int i, j; // for loop of selection sort and country
 
     for (row = 0; row < COUNTRIES_COUNT; row++)
     {
         min = row;
-        
+
         for (i = row; i < COUNTRIES_COUNT; i++)
-        {   
+        {
             // sort in decreasing order so we use > not <
             if (sorted[i] > sorted[min])
             {
@@ -201,18 +242,21 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         Part 2.
         Only put the top num data in the final array.
     */
-    for (i = 0; i < num; i++){
+    for (i = 0; i < num; i++)
+    {
         // The second row of topData is for the variables of the country for the category.
         topData[i][1] = sorted[i];
     }
 
     // Determine what the country name is for the specific data.
-    for (i = 0; i < num; i++){
-        for (j = 0; j < COUNTRIES_COUNT; j++){
+    for (i = 0; i < num; i++)
+    {
+        for (j = 0; j < COUNTRIES_COUNT; j++)
+        {
             if (topData[i][1] == unsorted[j])
             {
                 // The first row of topData is for the country names that are selected.
-                topData[i][0] = (double) (j);
+                topData[i][0] = (double)(j);
             }
         }
     }
@@ -230,10 +274,11 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
     - none
 
 */
-void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double results[4]){
+void questionTwo(int category, double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], double results[4])
+{
     /*
         - This question uses count, minimum, maximum, and average.
-        
+
         Algorithm for implementation:
             Part 1. Filter category from the total data set and get size.
             Part 2. Get the min.
@@ -248,7 +293,7 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
     */
 
     int i; // used in for loop
-    double catData[COUNTRIES_COUNT-1];
+    double catData[COUNTRIES_COUNT - 1];
     double min, max;
     double avg = 0;
 
@@ -270,11 +315,11 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
 
         The min and max can be solved simultaneously.
     */
-    
+
     min = catData[0];
     max = catData[0];
 
-    for (i = 1; i < (int) results[0]; i++)
+    for (i = 1; i < (int)results[0]; i++)
     {
         if (min > catData[i])
         {
@@ -297,11 +342,11 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
         Part 4.
         Get the average of the array
     */
-    for (i = 0; i < (int) results[0]; i++)
+    for (i = 0; i < (int)results[0]; i++)
     {
         avg += catData[i];
     }
-    
+
     avg /= results[0];
 
     // put the results in array
@@ -318,16 +363,18 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
     - num [int]: number of countries which have the highest value for the category.
     - category [int]: the category number.
     - double SOGA[][] [double]: 2d array of SOGA dataset.
-    - string country [String]: the country in the median.
+    - string countries [String]: the list of countries.
+    - output [String]: output, name of country.
     return:
     - none
 
 */
-void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String countries[COUNTRIES_COUNT], String output){
+void questionTri(int num, int category, double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], String countries[COUNTRIES_COUNT], String output)
+{
 
     /*
         - This question uses count, minimum, maximum, and average.
-        
+
         Algorithm for implementation:
             Part 1. Get the average of the data set.
             Part 2. Create a new array with data values below the average.
@@ -336,13 +383,13 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
             Part 5. Get the median (middle position) in the new array.
     */
 
-    int i, count = 0; // initialize count as zero, this will be used in Part 2 in indexing for blwAvg.
+    int i, count = 0;                // initialize count as zero, this will be used in Part 2 in indexing for blwAvg.
     double catData[COUNTRIES_COUNT]; // SOGA data for a specific category
-    double blwAvg[COUNTRIES_COUNT]; // array that only includes those below the avg.
-    double top[num]; // array that only includes the top num elements in blwAvg.
-    double avg = 0; // initialize avg because we want to use += later in getting the average
-    double med; // median of top[]
-    int min, h, k; // variables used in selection sort
+    double blwAvg[COUNTRIES_COUNT];  // array that only includes those below the avg.
+    double top[num];                 // array that only includes the top num elements in blwAvg.
+    double avg = 0;                  // initialize avg because we want to use += later in getting the average
+    double med;                      // median of top[]
+    int min, h, k;                   // variables used in selection sort
 
     // use filterCat again to only get the relevant data values.
     filterCat(SOGA, catData, category);
@@ -351,19 +398,22 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         Part 1.
         Get the average of catData.
     */
-    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
         avg += catData[i];
     }
     avg /= COUNTRIES_COUNT - 1;
 
     /*
         Part 2.
-        Add elements in catData to blwAvg if it is below the average 
+        Add elements in catData to blwAvg if it is below the average
     */
-    for (i = 0; i < COUNTRIES_COUNT; i++){
-        if (catData[i] < avg){
+    for (i = 0; i < COUNTRIES_COUNT; i++)
+    {
+        if (catData[i] < avg)
+        {
             blwAvg[count] = catData[i]; // use count in indexing blwAvg, this is why it was initialized = 0.
-            count++; // increment count.
+            count++;                    // increment count.
         }
     }
 
@@ -371,10 +421,12 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         Part 3.
         Selection sort blwAvg.
     */
-    for (h = 0; h < count; h++){
+    for (h = 0; h < count; h++)
+    {
         min = h;
 
-        for (k = h; k < count; k++){
+        for (k = h; k < count; k++)
+        {
             if (blwAvg[k] > blwAvg[min])
             {
                 min = k;
@@ -388,7 +440,8 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         Get the first num elements in blwAvg.
     */
 
-    for (i = 0; i < num; i++){
+    for (i = 0; i < num; i++)
+    {
         top[i] = blwAvg[i];
     };
 
@@ -396,13 +449,16 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         Part 5
         Get the median of the data
     */
-    if (num % 2) med = top[(num-1)/2];
-    else med = top[(num/2)]; // note that the median will be count/2 ONLY not count/2 and count/2 - 1.
+    if (num % 2)
+        med = top[(num - 1) / 2];
+    else
+        med = top[(num / 2)]; // note that the median will be count/2 ONLY not count/2 and count/2 - 1.
 
-    for (int i = 0; i < COUNTRIES_COUNT-1; i++){
+    for (int i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
         if (catData[i] == med)
-            strcpy(output,countries[i]);
-    }    
+            strcpy(output, countries[i]);
+    }
 }
 
 /* questionFor
@@ -410,14 +466,19 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
     purpose: sort the data of a category and find the data above and below a country.
 
     params:
-    - 
+    - country [String]: the country the user selected
+    - num [int]: number of countries which have the highest value for the category.
+    - category [int]: the category number.
+    - double SOGA[][] [double]: 2d array of SOGA dataset.
+    - double output[] [double]: array of the output, the value at the index, index + 1, and index - 1.
 
 */
-void questionFor(String country, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String countries[COUNTRIES_COUNT], double output[3]){
+void questionFor(String country, int category, double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], String countries[COUNTRIES_COUNT], double output[3])
+{
 
     /*
         - Linear search and selection sort.
-        
+
         Algorithm for implementation:
             Part 1. Sort the data for the category.
             Part 2. Search for the key and the element above and below.
@@ -428,7 +489,7 @@ void questionFor(String country, int category, double SOGA[][SOGA_COUNT/COUNTRIE
     double sorted[COUNTRIES_COUNT];
     double key;
     double index, above, below;
-    int i, j, min; // used for selection sort 
+    int i, j, min; // used for selection sort
 
     filterCat(SOGA, dataCat, category);
     filterCat(SOGA, sorted, category);
@@ -438,10 +499,12 @@ void questionFor(String country, int category, double SOGA[][SOGA_COUNT/COUNTRIE
         Do selection sort
     */
 
-    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
         min = i;
 
-        for (j = i; j < COUNTRIES_COUNT; j++){
+        for (j = i; j < COUNTRIES_COUNT - 1; j++)
+        {
             if (sorted[j] > sorted[min])
             {
                 min = j;
@@ -454,28 +517,112 @@ void questionFor(String country, int category, double SOGA[][SOGA_COUNT/COUNTRIE
         Part 2
         Find the data value of the country for the category and this will be key.
     */
-    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
         // use strcmp, recall if strcmp is true it will return 0
         // otherwise
-        if (!strcmp(country, countries[i])){
+        if (!strcmp(country, countries[i]))
+        {
             key = dataCat[i];
         }
     }
-    
+
     // linear search
-    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
-        if (sorted[i] == key){
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
+        if (sorted[i] == key)
+        {
             output[1] = key;
 
             // added some error handling here so that above and below
             // don't go out of bounds
-            if (i != 0) output[2] = sorted[i+1];
-            else output[2] = sorted[0];
- 
-            if (i != COUNTRIES_COUNT - 1) output[0] = sorted[i-1];
-            else output[0] = sorted[COUNTRIES_COUNT - 1];
+            if (i != 0)
+                output[2] = sorted[i + 1];
+            else
+                output[2] = sorted[0];
+
+            if (i != COUNTRIES_COUNT - 1)
+                output[0] = sorted[i - 1];
+            else
+                output[0] = sorted[COUNTRIES_COUNT - 1];
         }
     }
+}
+
+/* questionFiv
+
+    purpose: determine the frequency of a value in the data set for a category.
+
+    params:
+    - category [int]: category selected by the user.
+    - low [double]: lower bound of the range.
+    - up [double]: upper bound of the range,
+    - double[][] [double]: SOGA dataset.
+    - output[] [double]: the output of the function that will contain the value and its frequency,
+
+    return:
+    - none
+    */
+void questionFiv(int category, String country, double SOGA[][SOGA_COUNT / COUNTRIES_COUNT], String countries[COUNTRIES_COUNT], int *position)
+{
+    /*
+        - selection sort, binary search, count.
+
+        Algorithm for implementation:
+            Part 1. Sort the data for the category.
+            Part 2. Search for the key and the element above and below.
+
+    */
+
+    double sorted[COUNTRIES_COUNT];
+    double dataCat[COUNTRIES_COUNT];
+    int i, j, min; // selection sort variables
+    int index;
+    double target;                  // binary search target
+    int low = 0;                    // low index for bin search
+    int high = COUNTRIES_COUNT - 1; // high index for bin search
+
+    filterCat(SOGA, sorted, category);
+    filterCat(SOGA, dataCat, category);
+
+    // find the value of user input Country for category
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
+        if (!strcmp(countries[i], country))
+        {
+            index = i;
+
+            printf("%s .. %s\n", countries[i], country);
+            break;
+        }
+    }
+
+    target = dataCat[index];
+
+    /*
+        Part 1.
+        Selection Sort in INCREASING ORDER
+    */
+
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+    {
+        min = i;
+        for (j = i; j < COUNTRIES_COUNT - 1; j++)
+        {
+            if (sorted[j] < sorted[min])
+            {
+                // notice less than sign because it's increasing order
+                min = j;
+            }
+            swap(&sorted[min], &sorted[i]);
+        }
+    }
+
+    /*
+        Part 2.
+        Binary Search
+    */
+    printf("%d ... %d\n", binSearch(sorted, COUNTRIES_COUNT - 1, target), index);
 }
 
 int main()
@@ -901,18 +1048,18 @@ int main()
         {67.9341806980634999, 0.4884903349182000, 0.2678947692933900, 0.0024575246545169, 0.2141303124958540, 1.0958044320052001, 0.2022733448018100, 0.1340318275195930, 8.5897707378330797, 2.7582388387979200, 3.7676487215068302, 2.7968235157881800, 2.2504985601289000, 0.6180263800486760, 0.2842691798073820},
         {63.5278538181136980, 2.3697724053613900, 0.3505533230177600, 0.0160080182451807, 1.9671221992380501, 5.1631482919346903, 0.2008851983811440, 2.1326623167247600, 3.0672916620334800, 0.8699977596752601, 0.9033228844716900, 0.7812965565127000, 0.6426488509419240, 0.1400485834646120, 1.4354375517728899},
         {70.3471930066096007, 2.3124308542231899, 1.3222038667006599, 0.0274897102094513, 0.8751909145918120, 4.0319969077351603, 0.1928756362361380, 0.4839385093342230, 8.9686245756862295, 2.6623935491122501, 2.3120372919889398, 1.7024465301272200, 1.3864187365309100, 0.3572448037041060, 0.2735533711621800}};
-    
+
     // array where the SOGA data set without global will be stored.
-    double noGlobal[COUNTRIES_COUNT][SOGA_COUNT/COUNTRIES_COUNT];
-    
+    double noGlobal[COUNTRIES_COUNT][SOGA_COUNT / COUNTRIES_COUNT];
+
     // array with the categories represented by integers.
     char sShowCategories[480] = "0: Baseline Life Expectancy\n1: Air Pollution\n2: Ambient PM\n3: Ozone\n4: Household AP\n5: Environmental Occupational Hazard\n6: Occupational Hazard\n7: Unsafe Hand Washing\n8: Metabolic Syndrome\n9: Deitary\n10: High Fasting Plasma Glucose/Sugar\n11: Tobacco\n12: Smoking\n13: Secondhand Smoke\n14: Unsafe Sex";
-    
-    // used for for loops for the entire source code.
-    int i,k; 
 
-    int num; // how many countries the question will print.
-    int category;     // the category the user will choose.
+    // used for for loops for the entire source code.
+    int i, k;
+
+    int num;      // how many countries the question will print.
+    int category; // the category the user will choose.
 
     /* Variables for question 1 */
     String countryName;
@@ -920,12 +1067,12 @@ int main()
 
         double oneOutput[num][2]; // output of question one.
     */
-    
+
     /* Variables for question 2*/
-    double twoOutput[4]; 
+    double twoOutput[4];
 
     /* Variables for question 3*/
-    String triOutput; 
+    String triOutput;
 
     /* Variables for Question 4*/
     String countrySelected, above, below;
@@ -933,13 +1080,16 @@ int main()
                          // and forOutput[2] is the value after.
                          // forOutput[1] is the value at the index
 
+    /* Variables for Question 5*/
+    int fivOutput;
+
     // call removeGBL function to make an array without the global data values
     removeGbl(SOGA, noGlobal);
 
     // ================
     // ===== QUESTION 1
     // ================
-    
+
     /*
     printf("=====\nQUESTION 1.\n=====\033[1;33m\nWhat are the names and values of the top `num` countries with the highest `category`?\n\n\033[0m");
 
@@ -948,14 +1098,14 @@ int main()
     scanf("%d", &num);
     double oneOutput[num][2]; // output of question one.
 
-    // print out the categories for the user.   
+    // print out the categories for the user.
     printf("\n=====\n%s\n=====\n\n", sShowCategories);
     printf("What category do you want to use?\n>. (int) ");
     scanf("%d", &category);
-    
+
     // execute the function.
     questionOne(num, category, noGlobal, countries, oneOutput);
-    // print result of the function.   
+    // print result of the function.
     // type cast oneOutput[i][0] because we want that to be a whole number
     printf("\n=====\nOutput of QUESTION 1.\n=====\n\033[1;33m");
     for (i = 0; i < num; i++) {
@@ -978,7 +1128,7 @@ int main()
 
     // // execute the function
     // questionTwo(category, noGlobal, twoOutput);
-    
+
     // // print result of the function
     // printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
     // printf("Count: %d\n", (int) twoOutput[0]);
@@ -1001,7 +1151,7 @@ int main()
     printf("\n=====\n%s\n=====\n\n", sShowCategories);
     printf("What category do you want to use?\n>. (int) ");
     scanf("%d", &category);
-    
+
     // execute the function
     questionTri(num, category, noGlobal, countries, triOutput);
     // print the result of the function
@@ -1014,9 +1164,10 @@ int main()
     // ===== QUESTION 4
     // ================
 
+    /*
     printf("\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the sorted data for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
     // get what countries they want
-    printf("What country do you want?\nInstructions, case sentivite and replace spaces and underscores\n>. (string) ");
+    printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
     scanf("%s", &countrySelected);
 
     // print out the categories for the user.
@@ -1041,7 +1192,24 @@ int main()
     printf("\nAbove: %s, %.5lf", above, forOutput[0]);
     printf("\n%s: %.5lf", countrySelected, forOutput[1]);
     printf("\nBelow: %s, %.5lf", below, forOutput[2]);
-    
+    */
+
+    // ================
+    // ===== QUESTION 5
+    // ================
+
+    printf("\n=====\nQUESTION 5.\n=====\033[1;33m\nIn `category`, what is the position of `country`'s data value if is sorted in increasing order?\n\033[0m\n\n");
+    printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
+    scanf("%s", &countrySelected);
+
+    // print out the categories for the user.
+    printf("\n=====\n%s\n=====\n\n", sShowCategories);
+    printf("What category do you want to use?\n>. (int) ");
+    scanf("%d", &category);
+
+    // execute the function
+    questionFiv(category, countrySelected, noGlobal, countries, &fivOutput);
+
     /*
        Call the function that answers a question. Thereafter, use printf() to print the question
        and the corresponding answer.  For example:
