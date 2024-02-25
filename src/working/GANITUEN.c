@@ -83,9 +83,9 @@ typedef char String[32];
 */
 void swap(double *x, double *y)
 {
-    double temp = *x;
+    double sorted = *x;
     *x = *y;
-    *y = temp;
+    *y = sorted;
 }
 
 /* removeGbl
@@ -139,12 +139,14 @@ void filterCat(double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double filter[COUNTRIE
 
 /* questionOne
 
-    purpose: get the top nNumCountries of nCategory and return the output (which is a string) to a pointer sOutput.
+    purpose: get the top num of category and return the output (which is a string) to a pointer sOutput.
 
     params:
-    - nNumCountries [int]: number of countries which have the highest value for the category.
-    - nCategory [int]: the category number.
-    - *sOutput [ptr, string]: the resulting array of the function.
+    - num [int]: number of countries which have the highest value for the category.
+    - category [int]: the category number.
+    - double SOGA[][] [double]: 2d array of SOGA dataset.
+    - countries [String]: array containing all countries.
+    - double topData[][] [double]: 2d array that contains the result.
 
     return:
     - none
@@ -169,12 +171,14 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         REMEMBER. Exclude SOGA[0] because that is the global data.
     */
     int row;                      // used in the for loops
-    double temp[COUNTRIES_COUNT]; // temporary array
+    double sorted[COUNTRIES_COUNT]; // temporary array that will be sorted
+    double unsorted[COUNTRIES_COUNT]; // temporary array that won't be sorted
     
-    filterCat(SOGA, temp, category);
+    filterCat(SOGA, sorted, category);
+    filterCat(SOGA, unsorted, category);
 
     int min; // minimum variable in the array
-    int i; // for loop for selection sort 
+    int i, j; // for loop of selection sort and country 
 
     for (row = 0; row < COUNTRIES_COUNT; row++)
     {
@@ -183,32 +187,28 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
         for (i = row; i < COUNTRIES_COUNT; i++)
         {   
             // sort in decreasing order so we use > not <
-            if (temp[i] > temp[min])
+            if (sorted[i] > sorted[min])
             {
                 min = i;
             }
         }
         // swap the positions
-        swap(&temp[min], &temp[row]);
+        swap(&sorted[min], &sorted[row]);
     }
 
     /*
         Part 2.
         Only put the top num data in the final array.
     */
-
-    // Extract the top num in temp and put it in topData
-    int j; // data used in for loop
-
     for (i = 0; i < num; i++){
         // The second row of topData is for the variables of the country for the category.
-        topData[i][1] = temp[i];
+        topData[i][1] = sorted[i];
     }
 
     // Determine what the country name is for the specific data.
     for (i = 0; i < num; i++){
         for (j = 0; j < COUNTRIES_COUNT; j++){
-            if (topData[i][1] == SOGA[j][category])
+            if (topData[i][1] == unsorted[j])
             {
                 // The first row of topData is for the country names that are selected.
                 topData[i][0] = (double) (j);
@@ -217,7 +217,19 @@ void questionOne(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
     }
 }
 
-void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double results[4][2]){
+/* questionTwo
+
+    purpose: Get the count, minimum, maximum, and average of countries for a specific category.
+
+    params:
+    - category [int]: the category number.
+    - double SOGA[][] [double]: 2d array of SOGA dataset.
+    - double results[] [double]: array that contains the result
+    return:
+    - none
+
+*/
+void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double results[4]){
     /*
         - This question uses count, minimum, maximum, and average.
         
@@ -235,21 +247,20 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
     */
 
     int i; // used in for loop
-    double catData[COUNTRIES_COUNT];
-    double count; // count needs to be double because array is double
-                  // the data type of this will just be type casted later on
+    double catData[COUNTRIES_COUNT-1];
     double min, max;
     double avg = 0;
 
     filterCat(SOGA, catData, category);
 
     // determine count using sizeof operator
-    count = sizeof(catData)/sizeof(double);
-
+    // recall that we don't have global here, so we subtract 1.
     // put result in results array
-    // count value will be stored in results[0][1]
+    // count value will be stored in results[0]
 
-    results[0][1] = count;
+    // count needs to be double because array is double
+    // the data type of this will just be type casted later on
+    results[0] = COUNTRIES_COUNT-1;
 
     /*
         Part 2, 3.
@@ -260,7 +271,8 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
     
     min = catData[0];
     max = catData[0];
-    for (i = 1; i < COUNTRIES_COUNT; i++)
+
+    for (i = 1; i < (int) results[0]; i++)
     {
         if (min > catData[i])
         {
@@ -274,30 +286,43 @@ void questionTwo(int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], double
     }
 
     // put results in array
-    // min value will be stored in results[1][1]
-    // max value will be stored in results[1][2]
-    results[1][1] = min;
-    results[2][1] = max;
+    // min value will be stored in results[1]
+    // max value will be stored in results[2]
+    results[1] = min;
+    results[2] = max;
 
     /*
         Part 4.
         Get the average of the array
     */
-    for (i = 0; i < SOGA_COUNT/COUNTRIES_COUNT; i++)
+    for (i = 0; i < (int) results[0]; i++)
     {
         avg += catData[i];
     }
     
-    avg /= count;
+    avg /= results[0];
 
     // put the results in array
     // avg value will be stored in results[1][3]
-    results[3][1] = avg;
+    results[3] = avg;
+}
 
-    // then put 0 to 3 in the first column of the array
-    // these values will be used later on for printing the array
-    for (i = 0; i < 4; i++) {results[i][0] = (double) i;
-    printf("%.2lf .. ", results[i][1]);}
+/* questionTri
+
+
+    purpose: Print the country that is the median of the last num countries below the average of a category.
+
+    params:
+    - num [int]: number of countries which have the highest value for the category.
+    - category [int]: the category number.
+    - double SOGA[][] [double]: 2d array of SOGA dataset.
+    - string country [String]: the country in the median.
+    return:
+    - none
+
+*/
+void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String country){
+
 }
 
 int main()
@@ -733,15 +758,17 @@ int main()
     // used for for loops for the entire source code.
     int i,k; 
 
-    // the category the user chose for question 1.
-    int nCategory;                       
+    int num; // how many countries the question will print.
+    int category;     // the category the user will choose.
 
     /* Variables for question 1 */
-    int nNumCountries;                   // how many countries the question will print.
-    double sOneOutput[nNumCountries][2]; // output of question one.
+    /*  the following variable/s should be here but are reliant on the user input so it's defined later on:
 
+        double sOneOutput[num][2]; // output of question one.
+    */
+    
     /* Variables for question 2*/
-    double sTwoOutput[4][2];
+    double sTwoOutput[4];
 
     // call removeGBL function to make an array without the global data values
     removeGbl(SOGA, noGlobal);
@@ -750,70 +777,74 @@ int main()
     // ===== QUESTION 1
     // ================
     
+    /*
     printf("=====\nQUESTION 1.\n=====\033[1;33m\nWhat are the names and values of the top `num` countries with the highest `category`?\n\n\033[0m");
 
     // get the user inputs for the parameters of questionOne();
     printf("How many countries do you want to print?\n>. (int) ");
-    scanf("%d", &nNumCountries);
+    scanf("%d", &num);
+    double sOneOutput[num][2]; // output of question one.
 
-    // print out the categories for the user.
+    // print out the categories for the user.   
     printf("\n=====\n%s\n=====\n\n", sShowCategories);
     printf("What category do you want to use?\n>. (int) ");
-    scanf("%d", &nCategory);
-
+    scanf("%d", &category);
+    
     // execute the function.
-    questionOne(nNumCountries, nCategory, noGlobal, countries, sOneOutput);
-
-    // print result of the function.
+    questionOne(num, category, noGlobal, countries, sOneOutput);
+    // print result of the function.   
     // type cast sOneOutput[i][0] because we want that to be a whole number
     printf("\n=====\nOutput of QUESTION 1.\n=====\n\033[1;33m");
-    for (i = 0; i < nNumCountries; i++) {
-        char countryName[50];
-        strcpy(countryName, countries[(int)sOneOutput[i][0]]);
+    for (i = 0; i < num; i++) {
+        String countryName;
+        int index = (int) sOneOutput[i][0];
+        strcpy(countryName, countries[index]);
         printf("%d. %s: %.5lf\n", (i + 1), countryName, sOneOutput[i][1]);
     }
+    
     printf("\033[0m");
+
+    */
 
     // ================
     // ===== QUESTION 2
     // ================
 
-    printf("\n=====\nQUESTION 2.\n=====\033[1;33m\nWhat are the number of countries, minimum, maximum, and average values for `category`\n\033[0m\n\n");
+    // printf("\n=====\nQUESTION 2.\n=====\033[1;33m\nWhat are the number of countries, minimum, maximum, and average values for `category`\n\033[0m\n\n");
+    // // print out the categories for the user.
+    // printf("=====\n%s\n=====\n\n", sShowCategories);
+    // printf("What category do you want to use?\n>. (int) ");
+    // scanf("%d", &category);
+
+    // // execute the function
+    // questionTwo(category, noGlobal, sTwoOutput);
+    
+    // // print result of the function
+    // printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
+    // printf("Count: %d\n", (int) sTwoOutput[0]);
+    // printf("Min: %.5lf\n", sTwoOutput[1]);
+    // printf("Max: %.5lf\n", sTwoOutput[2]);
+    // printf("Avg: %.5lf\n", sTwoOutput[3]);
+    // printf("\033[0m");
+
+    // ================
+    // ===== QUESTION 3
+    // ================
+
+    printf("\n=====\nQUESTION 3.\n=====\033[1;33m\nGiven the last `num` countries below the average for `category`. What country is the median in that set?\n\033[0m\n\n");
+    // get how many countries they want
+    printf("How many countries?\n>. (int) ");
+    scanf("%d", &num);
+
     // print out the categories for the user.
     printf("=====\n%s\n=====\n\n", sShowCategories);
     printf("What category do you want to use?\n>. (int) ");
-    scanf("%d", &nCategory);
-
-    // execute the function
-    questionTwo(nCategory, noGlobal, sTwoOutput);
+    scanf("%d", &category);
     
-    // print result of the function
-    printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
-    for (i = 0; i < 4; i++){
-        switch ((int) sTwoOutput[i][0])
-        {
-        case 0:
-            printf("Count: %d\n", (int) sTwoOutput[i][1]);
-            break;
-        
-        case 1:
-            printf("Min: %.5lf\n", sTwoOutput[i][1]);
-            break;
+    // execute the function
 
-        case 2:
-            printf("Max: %.5lf\n", sTwoOutput[i][1]);
-
-        case 3:
-            printf("Avg: %.5lf\n", sTwoOutput[i][1]);
-        }
-    }
-    printf("\033[0m");
-
-    /* TODO:
-        - "CHINA" always appearing as the third listing in Question 1.
-        - Min not correct in Question 2
-    */
-
+    // print the result of the function
+    
     /*
        Call the function that answers a question. Thereafter, use printf() to print the question
        and the corresponding answer.  For example:
