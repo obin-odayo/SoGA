@@ -1118,11 +1118,11 @@ int main()
     // ===== QUESTION 2
     // ================
 
-    // printf("\n=====\nQUESTION 2.\n=====\033[1;33m\nWhat are the number of countries, minimum, maximum, and average values for `category`\n\033[0m\n");
+    printf("\n=====\nQUESTION 2.\n=====\033[1;33m\nWhat are the number of countries, minimum, maximum, and average values for `category`\n\033[0m\n");
     // // print out the categories for the user.
-    // printf("=====\n%s\n=====\n\n", sShowCategories);
-    // printf("What category do you want to use?\n>. (int) ");
-    // scanf("%d", &category);
+    printf("=====\n%s\n=====\n\n", sShowCategories);
+    printf("What category do you want to use?\n>. (int) ");
+    scanf("%d", &category);
 
     // execute the function
     questionTwo(category, noGlobal, twoOutput);
