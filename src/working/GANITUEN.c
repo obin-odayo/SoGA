@@ -405,6 +405,79 @@ void questionTri(int num, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT
     }    
 }
 
+/* questionFor
+
+    purpose: sort the data of a category and find the data above and below a country.
+
+    params:
+    - 
+
+*/
+void questionFor(String country, int category, double SOGA[][SOGA_COUNT/COUNTRIES_COUNT], String countries[COUNTRIES_COUNT], double output[3]){
+
+    /*
+        - Linear search and selection sort.
+        
+        Algorithm for implementation:
+            Part 1. Sort the data for the category.
+            Part 2. Search for the key and the element above and below.
+    */
+
+    // use filterCat
+    double dataCat[COUNTRIES_COUNT];
+    double sorted[COUNTRIES_COUNT];
+    double key;
+    double index, above, below;
+    int i, j, min; // used for selection sort 
+
+    filterCat(SOGA, dataCat, category);
+    filterCat(SOGA, sorted, category);
+
+    /*
+        Part 1
+        Do selection sort
+    */
+
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
+        min = i;
+
+        for (j = i; j < COUNTRIES_COUNT; j++){
+            if (sorted[j] > sorted[min])
+            {
+                min = j;
+            }
+        }
+        swap(&sorted[min], &sorted[i]);
+    }
+
+    /*
+        Part 2
+        Find the data value of the country for the category and this will be key.
+    */
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
+        // use strcmp, recall if strcmp is true it will return 0
+        // otherwise
+        if (!strcmp(country, countries[i])){
+            key = dataCat[i];
+        }
+    }
+    
+    // linear search
+    for (i = 0; i < COUNTRIES_COUNT - 1; i++){
+        if (sorted[i] == key){
+            output[1] = key;
+
+            // added some error handling here so that above and below
+            // don't go out of bounds
+            if (i != 0) output[2] = sorted[i+1];
+            else output[2] = sorted[0];
+ 
+            if (i != COUNTRIES_COUNT - 1) output[0] = sorted[i-1];
+            else output[0] = sorted[COUNTRIES_COUNT - 1];
+        }
+    }
+}
+
 int main()
 {
     /* Declare your own local variables. Describe the purpose of your local variables. */
@@ -842,17 +915,23 @@ int main()
     int category;     // the category the user will choose.
 
     /* Variables for question 1 */
-    String countryName1;
+    String countryName;
     /*  the following variable/s should be here but are reliant on the user input so it's defined later on:
 
         double oneOutput[num][2]; // output of question one.
     */
     
     /* Variables for question 2*/
-    double twoOutput[4];
+    double twoOutput[4]; 
 
     /* Variables for question 3*/
-    String  triOutput;
+    String triOutput; 
+
+    /* Variables for Question 4*/
+    String countrySelected, above, below;
+    double forOutput[3]; // note that forOutput[0] is the value before the countrySelected
+                         // and forOutput[2] is the value after.
+                         // forOutput[1] is the value at the index
 
     // call removeGBL function to make an array without the global data values
     removeGbl(SOGA, noGlobal);
@@ -881,8 +960,8 @@ int main()
     printf("\n=====\nOutput of QUESTION 1.\n=====\n\033[1;33m");
     for (i = 0; i < num; i++) {
         int index = (int) oneOutput[i][0];
-        strcpy(countryName1, countries[index]);
-        printf("%d. %s: %.5lf\n", (i + 1), countryName1, oneOutput[i][1]);
+        strcpy(countryName, countries[index]);
+        printf("%d. %s: %.5lf\n", (i + 1), countryName, oneOutput[i][1]);
     }
     */
     printf("\033[0m");
@@ -912,6 +991,7 @@ int main()
     // ===== QUESTION 3
     // ================
 
+    /*
     printf("\n=====\nQUESTION 3.\n=====\033[1;33m\nGiven the last `num` countries below the average for `category`. What country is the median in that set?\n\033[0m\n\n");
     // get how many countries they want
     printf("How many countries?\n>. (int) ");
@@ -928,7 +1008,40 @@ int main()
     printf("\n=====\nOutput of QUESTION 3.\n=====\n\033[1;33m");
     printf("%s", triOutput);
     printf("\033[0m");
+    */
 
+    // ================
+    // ===== QUESTION 4
+    // ================
+
+    printf("\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the sorted data for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
+    // get what countries they want
+    printf("What country do you want?\nInstructions, case sentivite and replace spaces and underscores\n>. (string) ");
+    scanf("%s", &countrySelected);
+
+    // print out the categories for the user.
+    printf("\n=====\n%s\n=====\n\n", sShowCategories);
+    printf("What category do you want to use?\n>. (int) ");
+    scanf("%d", &category);
+
+    // execute the function
+    questionFor(countrySelected, category, noGlobal, countries, forOutput);
+
+    // determine the country names above and below the country
+    for (i = 0; i< COUNTRIES_COUNT; i++)
+        if (noGlobal[i][category] == forOutput[0])
+            strcpy(above, countries[i]);
+
+    for (i = 0; i< COUNTRIES_COUNT; i++)
+        if (noGlobal[i][category] == forOutput[2])
+            strcpy(below, countries[i]);
+
+    // print the result of the function
+    printf("\n=====\nOutput of QUESTION 4.\n=====\n\033[1;33m");
+    printf("\nAbove: %s, %.5lf", above, forOutput[0]);
+    printf("\n%s: %.5lf", countrySelected, forOutput[1]);
+    printf("\nBelow: %s, %.5lf", below, forOutput[2]);
+    
     /*
        Call the function that answers a question. Thereafter, use printf() to print the question
        and the corresponding answer.  For example:

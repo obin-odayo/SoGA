@@ -17,8 +17,8 @@ Q2: What are the numbers of countries, minimum, maximum, and average values for 
 Q3: Given the first <num> countries below the average for <category>. What country is the median in that set? 
     [algorithm(s): selection sort, average, count]
 
-Q4: Is <country>'s <category> above the average? 
-    [algorithm(s): average]
+Q4: Given the sorted data for <category> what are the countries  above and below the data of <country>.
+    [algorithm(s): selection sort,  linear search]
 
 Q5: Are there data in <category> that repeats? 
     [algorithm(s): binary search]
@@ -42,8 +42,10 @@ A2: Count: 203
 A3: (let: num = 5, category = Dietary)
     Median: 0.86999776
 
-A4: (let: country = Philippines, category = Air Pollution)
-    Yes
+A4: (let: country = Mozambique, category = Baseline Life Expectancy)
+    Above: Somalia, 58.58.46516
+    Philippines: 71.79842
+    Below: Eswatini, 58.18399
 
 A5: (let: category = Ambient PM)
     No. None of the data for 'Ambient PM' repeat.
