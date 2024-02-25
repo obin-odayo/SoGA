@@ -20,6 +20,14 @@
 
 */
 
+/*
+    TODO:
+    - Bug Fixes 
+    - Output Validation
+    - Cleaning
+    - Documentation
+*/
+
 #include <stdio.h>
 #include <string.h>
 /* Do NOT include other header files. */
