@@ -14,7 +14,7 @@ Q1: What are the names and values of the top <num> countries with the highest <c
 Q2: What are the numbers of countries, minimum, maximum, and average values for Ozone? 
     [algorithm(s): count, minimum, maximum, and average]
 
-Q3: Given the last <num> countries below the average for <category>. What country is the median in that set? 
+Q3: Given the first <num> countries below the average for <category>. What country is the median in that set? 
     [algorithm(s): selection sort, average, count]
 
 Q4: Is <country>'s <category> above the average? 
