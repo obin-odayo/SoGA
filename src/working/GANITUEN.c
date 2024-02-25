@@ -592,7 +592,6 @@ void questionFiv(int category, String country, double SOGA[][SOGA_COUNT / COUNTR
         {
             index = i;
 
-            printf("%s .. %s\n", countries[i], country);
             break;
         }
     }
@@ -622,7 +621,7 @@ void questionFiv(int category, String country, double SOGA[][SOGA_COUNT / COUNTR
         Part 2.
         Binary Search
     */
-    printf("%d ... %d\n", binSearch(sorted, COUNTRIES_COUNT - 1, target), index);
+    *position = binSearch(sorted, COUNTRIES_COUNT - 1, target);
 }
 
 int main()
@@ -1090,7 +1089,6 @@ int main()
     // ===== QUESTION 1
     // ================
 
-    /*
     printf("=====\nQUESTION 1.\n=====\033[1;33m\nWhat are the names and values of the top `num` countries with the highest `category`?\n\n\033[0m");
 
     // get the user inputs for the parameters of questionOne();
@@ -1113,7 +1111,7 @@ int main()
         strcpy(countryName, countries[index]);
         printf("%d. %s: %.5lf\n", (i + 1), countryName, oneOutput[i][1]);
     }
-    */
+
     printf("\033[0m");
 
     // ================
@@ -1126,24 +1124,22 @@ int main()
     // printf("What category do you want to use?\n>. (int) ");
     // scanf("%d", &category);
 
-    // // execute the function
-    // questionTwo(category, noGlobal, twoOutput);
+    // execute the function
+    questionTwo(category, noGlobal, twoOutput);
 
-    // // print result of the function
-    // printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
-    // printf("Count: %d\n", (int) twoOutput[0]);
-    // printf("Min: %.5lf\n", twoOutput[1]);
-    // printf("Max: %.5lf\n", twoOutput[2]);
-    // printf("Avg: %.5lf\n", twoOutput[3]);
-    // printf("\033[0m");
+    // print result of the function
+    printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
+    printf("Count: %d\n", (int) twoOutput[0]);
+    printf("Min: %.5lf\n", twoOutput[1]);
+    printf("Max: %.5lf\n", twoOutput[2]);
+    printf("Avg: %.5lf\n", twoOutput[3]);
+    printf("\033[0m");
 
     // ================
     // ===== QUESTION 3
     // ================
 
-    /*
-    printf("\n=====\nQUESTION 3.\n=====\033[1;33m\nGiven the last `num` countries below the average for `category`. What country is the median in that set?\n\033[0m\n\n");
-    // get how many countries they want
+    printf("\n=====\nQUESTION 3.\n=====\033[1;33m\nGiven the last `num` countries below the average for `category`. What country is the median in that set?\n\033[0m\n");
     printf("How many countries?\n>. (int) ");
     scanf("%d", &num);
 
@@ -1155,17 +1151,15 @@ int main()
     // execute the function
     questionTri(num, category, noGlobal, countries, triOutput);
     // print the result of the function
-    printf("\n=====\nOutput of QUESTION 3.\n=====\n\033[1;33m");
+    printf("\n=====\nOutput of QUsESTION 3.\n=====\n\033[1;33m");
     printf("%s", triOutput);
     printf("\033[0m");
-    */
 
     // ================
     // ===== QUESTION 4
     // ================
 
-    /*
-    printf("\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the sorted data for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
+    printf("\n\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the sorted data for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
     // get what countries they want
     printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
     scanf("%s", &countrySelected);
@@ -1192,13 +1186,13 @@ int main()
     printf("\nAbove: %s, %.5lf", above, forOutput[0]);
     printf("\n%s: %.5lf", countrySelected, forOutput[1]);
     printf("\nBelow: %s, %.5lf", below, forOutput[2]);
-    */
+    printf("\033[0m");
 
     // ================
     // ===== QUESTION 5
     // ================
 
-    printf("\n=====\nQUESTION 5.\n=====\033[1;33m\nIn `category`, what is the position of `country`'s data value if is sorted in increasing order?\n\033[0m\n\n");
+    printf("\n\n=====\nQUESTION 5.\n=====\033[1;33m\nIn `category`, what is the position of `country`'s data value if is sorted in increasing order?\n\033[0m\n\n");
     printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
     scanf("%s", &countrySelected);
 
@@ -1210,6 +1204,10 @@ int main()
     // execute the function
     questionFiv(category, countrySelected, noGlobal, countries, &fivOutput);
 
+    // print the result of the function
+    printf("\n=====\nOutput of QUESTION 5.\n=====\n\033[1;33m");
+    printf("\nPosition: %d", fivOutput);
+    printf("\033[0m");
     /*
        Call the function that answers a question. Thereafter, use printf() to print the question
        and the corresponding answer.  For example:
