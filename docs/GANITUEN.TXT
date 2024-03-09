@@ -3,7 +3,7 @@
 
 General Direction: Replace the underlines with the appropriate entries.
 
-LASTNAME1, FIRSTNAME1: Ganituen, Zhean Robby               SECTION1: S11A 
+LASTNAME1, FIRSTNAME1: GANITUEN, Zhean Robby               SECTION1: S11A 
 
 Encode your questions below.  Indicate as well the algorithm(s) to be used in answering each question.
 Questions with parameter(s) should have the parameter(s) encoded in angled brackets, for example, <parameter-name>. 
@@ -20,8 +20,8 @@ Q3: Given the first <num> countries below the average for <category>. What count
 
 Q4: Given the data sorted in descending order for <category> what are the countries above and below the data of <country>.
     [algorithm(s): selection sort, linear search]
-    Remarks.    See test case for Q4, say the rank of the country in the category (when sorted in descending order) is the 
-                nth rank. So, the country above it is the (n-1)th rank and the country below it is the (n+1)th rank.
+    Remarks.    Say the rank of the country in the category (when sorted in descending order) is the nth rank. So, the 
+                country above it is the (n-1)th rank and the country below it is the (n+1)th rank.
                 
 
 Q5: In <category>, what is the position of <country>'s data value if is sorted in increasing order?
