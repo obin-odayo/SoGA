@@ -496,7 +496,6 @@ void questionFor(String country, int category, double SOGA[][SOGA_COUNT / COUNTR
     double dataCat[COUNTRIES_COUNT];
     double sorted[COUNTRIES_COUNT];
     double key;
-    double index, above, below;
     int i, j, min; // used for selection sort
 
     filterCat(SOGA, dataCat, category);
@@ -587,8 +586,6 @@ void questionFiv(int category, String country, double SOGA[][SOGA_COUNT / COUNTR
     int i, j, min; // selection sort variables
     int index;
     double target;                  // binary search target
-    int low = 0;                    // low index for bin search
-    int high = COUNTRIES_COUNT - 1; // high index for bin search
 
     filterCat(SOGA, sorted, category);
     filterCat(SOGA, dataCat, category);
@@ -1063,7 +1060,8 @@ int main()
     char sShowCategories[480] = "0: Baseline Life Expectancy\n1: Air Pollution\n2: Ambient PM\n3: Ozone\n4: Household AP\n5: Environmental Occupational Hazard\n6: Occupational Hazard\n7: Unsafe Hand Washing\n8: Metabolic Syndrome\n9: Deitary\n10: High Fasting Plasma Glucose/Sugar\n11: Tobacco\n12: Smoking\n13: Secondhand Smoke\n14: Unsafe Sex";
 
     // used for for loops for the entire source code.
-    int i, k;
+    int i;
+    // int k;
 
     int num;      // how many countries the question will print.
     int category; // the category the user will choose.
@@ -1170,7 +1168,7 @@ int main()
     printf("\n\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the sorted data for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
     // get what countries they want
     printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
-    scanf("%s", &countrySelected);
+    scanf("%s", countrySelected);
 
     // print out the categories for the user.
     printf("\n=====\n%s\n=====\n\n", sShowCategories);
@@ -1202,7 +1200,7 @@ int main()
 
     printf("\n\n=====\nQUESTION 5.\n=====\033[1;33m\nIn `category`, what is the position of `country`'s data value if is sorted in increasing order?\n\033[0m\n\n");
     printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
-    scanf("%s", &countrySelected);
+    scanf("%s", countrySelected);
 
     // print out the categories for the user.
     printf("\n=====\n%s\n=====\n\n", sShowCategories);
