@@ -20,10 +20,12 @@ Q3: Given the first <num> countries below the average for <category>. What count
 
 Q4: Given the data sorted in descending order for <category> what are the countries above and below the data of <country>.
     [algorithm(s): selection sort, linear search]
+    Remarks.    See test case for Q4, say the rank of the country in the category (when sorted in descending order) is the 
+                nth rank. So, the country above it is the (n-1)th rank and the country below it is the (n+1)th rank.
+                
 
 Q5: In <category>, what is the position of <country>'s data value if is sorted in increasing order?
     [algorithm(s): selection sort, binary search]
-
 
 Encode the expected answers to the questions below. For question with parameter(s), indicate explicitly the
 actual parameter value(s). 
