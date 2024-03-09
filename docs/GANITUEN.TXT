@@ -8,16 +8,17 @@ LASTNAME1, FIRSTNAME1: Ganituen, Zhean Robby               SECTION1: S11A
 Encode your questions below.  Indicate as well the algorithm(s) to be used in answering each question.
 Questions with parameter(s) should have the parameter(s) encoded in angled brackets, for example, <parameter-name>. 
 
-Q1: What are the names and values of the top <num> countries with the highest <category>? 
+Q1: What are the names and values of the top <num> countries with the highest <category>?
+    Remark, output must be double with 5 significant units.
     [algorithm(s): selection sort, maximum]
 
-Q2: What are the numbers of countries, minimum, maximum, and average values for Ozone? 
+Q2: What are the numbers of countries, minimum, maximum, and average values for <category>? 
     [algorithm(s): count, minimum, maximum, and average]
 
 Q3: Given the first <num> countries below the average for <category>. What country is the median in that set? 
     [algorithm(s): selection sort, average, count]
 
-Q4: Given the sorted data for <category> what are the countries above and below the data of <country>.
+Q4: Given the data sorted in descending order for <category> what are the countries above and below the data of <country>.
     [algorithm(s): selection sort, linear search]
 
 Q5: In <category>, what is the position of <country>'s data value if is sorted in increasing order?
@@ -28,23 +29,24 @@ Encode the expected answers to the questions below. For question with parameter(
 actual parameter value(s). 
 
 A1: (let: num = 5, category = Ozone)
-    1. Nepal: 0.333468983
-    2. India: 0.206115793
-    3. Bhutan: 0.165264277
-    4. North Korea: 0.16457043
-    5. Bangladesh: 0.133546667
+    1. Nepal: 0.33347
+    2. India: 0.20612
+    3. Bhutan: 0.16526
+    4. North Korea: 0.16457
+    5. Bangladesh: 0.13355
 
-A2: Count: 203
+A2: (let: category = Ozone)
+    Count: 203
     Minimum: 0.000002689
     Maximum: 0.333468983
     Average: 0.023906429
 
 A3: (let: num = 5, category = Dietary)
-    Median: 0.86999776
+    India
 
 A4: (let: country = Mozambique, category = Baseline Life Expectancy)
     Above: Somalia, 58.58.46516
-    Philippines: 71.79842
+    Mozambique: 71.79842
     Below: Eswatini, 58.18399
 
 A5: (let: country = China, Category = Ambient PM)

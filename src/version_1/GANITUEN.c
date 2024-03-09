@@ -1136,9 +1136,9 @@ int main()
     // print result of the function
     printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
     printf("Count: %d\n", (int) twoOutput[0]);
-    printf("Min: %.5lf\n", twoOutput[1]);
-    printf("Max: %.5lf\n", twoOutput[2]);
-    printf("Avg: %.5lf\n", twoOutput[3]);
+    printf("Min: %lf\n", twoOutput[1]);
+    printf("Max: %lf\n", twoOutput[2]);
+    printf("Avg: %lf\n", twoOutput[3]);
     printf("\033[0m");
 
     // ================
@@ -1157,7 +1157,7 @@ int main()
     // execute the function
     questionTri(num, category, noGlobal, countries, triOutput);
     // print the result of the function
-    printf("\n=====\nOutput of QUsESTION 3.\n=====\n\033[1;33m");
+    printf("\n=====\nOutput of QUSESTION 3.\n=====\n\033[1;33m");
     printf("%s", triOutput);
     printf("\033[0m");
 
@@ -1165,7 +1165,7 @@ int main()
     // ===== QUESTION 4
     // ================
 
-    printf("\n\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the sorted data for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
+    printf("\n\n=====\nQUESTION 4.\n=====\033[1;33m\nGiven the data sorted in descending order for `category` what are the countries above and below the data of `country`.\n\033[0m\n\n");
     // get what countries they want
     printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
     scanf("%s", countrySelected);
