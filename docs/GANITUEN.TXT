@@ -14,6 +14,7 @@ Q1: What are the names and values of the top <num> countries with the highest <c
 
 Q2: What are the numbers of countries, minimum, maximum, and average values for <category>? 
     [algorithm(s): count, minimum, maximum, and average]
+    Remarks.    for minimum, maximum, and average have 8 significant figures.
 
 Q3: Given the first <num> countries below the average for <category>. What country is the median in that set? 
     [algorithm(s): selection sort, average, count]
@@ -23,7 +24,6 @@ Q4: Given the data sorted in descending order for <category> what are the countr
     Remarks.    Say the rank of the country in the category (when sorted in descending order) is the nth rank. So, the 
                 country above it is the (n-1)th rank and the country below it is the (n+1)th rank.
                 
-
 Q5: In <category>, what is the position of <country>'s data value if is sorted in increasing order?
     [algorithm(s): selection sort, binary search]
 
@@ -38,17 +38,17 @@ A1: (let: num = 5, category = Ozone)
     5. Bangladesh: 0.13355
 
 A2: (let: category = Ozone)
-    Count: 203
-    Minimum: 0.000002689
-    Maximum: 0.333468983
-    Average: 0.023906429
+    Count: 202
+    Min: 0.07504352
+    Max: 3.49318650
+    Avg: 1.25852339
 
 A3: (let: num = 5, category = Dietary)
     India
 
 A4: (let: country = Mozambique, category = Baseline Life Expectancy)
     Above: Somalia, 58.58.46516
-    Mozambique: 71.79842
+    Mozambique: 58.38278
     Below: Eswatini, 58.18399
 
 A5: (let: country = China, Category = Ambient PM)

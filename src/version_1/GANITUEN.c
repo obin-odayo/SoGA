@@ -22,10 +22,13 @@
 
 /*
     TODO:
-    - Bug Fixes 
-    - Output Validation
-    - Cleaning
-    - Documentation
+    - [DONE] Bug Fixes 
+    - [DONE] Output Validation
+    - [DONE] Cleaning
+    - [DONE] Documentation
+    - NOT FOUND scenario for functions with searches.
+        - Q4
+        - Q5
 */
 
 #include <stdio.h>
@@ -1136,9 +1139,9 @@ int main()
     // print result of the function
     printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
     printf("Count: %d\n", (int) twoOutput[0]);
-    printf("Min: %lf\n", twoOutput[1]);
-    printf("Max: %lf\n", twoOutput[2]);
-    printf("Avg: %lf\n", twoOutput[3]);
+    printf("Min: %.8lf\n", twoOutput[1]);
+    printf("Max: %.8lf\n", twoOutput[2]);
+    printf("Avg: %.8lf\n", twoOutput[3]);
     printf("\033[0m");
 
     // ================
