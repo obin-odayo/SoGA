@@ -27,8 +27,8 @@
     - [DONE] Cleaning
     - [DONE] Documentation
     - NOT FOUND scenario for functions with searches.
-        - Q4
-        - Q5
+        - [DONE, debugging needed] Q4
+        - [DONE, debugging needed] Q5
 */
 
 #include <stdio.h>
@@ -1247,7 +1247,7 @@ int main()
         printf("ERROR: Country name `%s` is not found in the list of countries in the SoGA dataset.", countrySelected);
         printf("\033[0m");
     }
-
+    printf("\n\n\n========END OF PROGRAM==========");
     /*
        Call the function that answers a question. Thereafter, use printf() to print the question
        and the corresponding answer.  For example:
