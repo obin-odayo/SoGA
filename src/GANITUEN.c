@@ -22,7 +22,7 @@
 
 /*
     TODO:
-    - [DONE] Bug Fixes 
+    - [DONE] Bug Fixes
     - [DONE] Output Validation
     - [DONE] Cleaning
     - [DONE] Documentation
@@ -498,7 +498,7 @@ void questionFor(String country, int category, double SOGA[][SOGA_COUNT / COUNTR
     // use filterCat
     double dataCat[COUNTRIES_COUNT];
     double sorted[COUNTRIES_COUNT];
-    double key = -1.0; 
+    double key = -1.0;
     int i, j, min; // used for selection sort
 
     filterCat(SOGA, dataCat, category);
@@ -588,7 +588,7 @@ void questionFiv(int category, String country, double SOGA[][SOGA_COUNT / COUNTR
     double dataCat[COUNTRIES_COUNT];
     int i, j, min; // selection sort variables
     int index;
-    double target;                  // binary search target
+    double target; // binary search target
 
     filterCat(SOGA, sorted, category);
     filterCat(SOGA, dataCat, category);
@@ -1084,16 +1084,15 @@ int main()
 
     /* Variables for Question 4*/
     String countrySelected, above, below;
-    int verifier = 0; // initialize as 0
-                      // assume that countrySelected is not in countries[]
-                      // verifier is used again for questionFiv
-    double forOutput [3]; // note that forOutput[0] is the value before the countrySelected
-                          // and forOutput[2] is the value after.
-                          // forOutput[1] is the value at the index
+    int verifier = 0;    // initialize as 0
+                         // assume that countrySelected is not in countries[]
+                         // verifier is used again for questionFiv
+    double forOutput[3]; // note that forOutput[0] is the value before the countrySelected
+                         // and forOutput[2] is the value after.
+                         // forOutput[1] is the value at the index
 
     /* Variables for Question 5*/
     int fivOutput;
-
 
     // call removeGBL function to make an array without the global data values
     removeGbl(SOGA, noGlobal);
@@ -1119,8 +1118,9 @@ int main()
     // print result of the function.
     // type cast oneOutput[i][0] because we want that to be a whole number
     printf("\n=====\nOutput of QUESTION 1.\n=====\n\033[1;33m");
-    for (i = 0; i < num; i++) {
-        int index = (int) oneOutput[i][0];
+    for (i = 0; i < num; i++)
+    {
+        int index = (int)oneOutput[i][0];
         strcpy(countryName, countries[index]);
         printf("%d. %s: %.5lf\n", (i + 1), countryName, oneOutput[i][1]);
     }
@@ -1142,7 +1142,7 @@ int main()
 
     // print result of the function
     printf("\n=====\nOutput of QUESTION 2.\n=====\n\033[1;33m");
-    printf("Count: %d\n", (int) twoOutput[0]);
+    printf("Count: %d\n", (int)twoOutput[0]);
     printf("Min: %.8lf\n", twoOutput[1]);
     printf("Max: %.8lf\n", twoOutput[2]);
     printf("Avg: %.8lf\n", twoOutput[3]);
@@ -1184,15 +1184,19 @@ int main()
 
     // check if countrySelected is in the list of countries
     // if so then change verifier to true (or 1)
-    for (i = 0; i < COUNTRIES_COUNT; i++) if (!strcmp(countrySelected, countries[i])) verifier = 1;
-    
+    for (i = 0; i < COUNTRIES_COUNT; i++)
+        if (!strcmp(countrySelected, countries[i]))
+            verifier = 1;
+
     // If countryName is in countries[] then execute and print result of the function
     // If not then print error message
-    if (verifier){
+    if (verifier)
+    {
         questionFor(countrySelected, category, noGlobal, countries, forOutput);
-    
+
         // determine the country names above and below the country
-        for (i = 0; i< COUNTRIES_COUNT; i++){
+        for (i = 0; i < COUNTRIES_COUNT; i++)
+        {
             if (noGlobal[i][category] == forOutput[0])
                 strcpy(above, countries[i]);
 
@@ -1205,13 +1209,14 @@ int main()
         printf("\n%s: %.5lf", countrySelected, forOutput[1]);
         printf("\nBelow: %s, %.5lf", below, forOutput[2]);
         printf("\033[0m");
-    } 
-    else{
+    }
+    else
+    {
         printf("\n=====\nOutput of QUESTION 4.\n=====\n\033[1;33m");
         printf("ERROR: Country name `%s` is not found in the list of countries in the SoGA dataset.", countrySelected);
         printf("\033[0m");
     }
-    
+
     // ================
     // ===== QUESTION 5
     // ================
@@ -1229,9 +1234,12 @@ int main()
     scanf("%d", &category);
 
     // check again if countrySelected is found in the SoGA set
-    for (i = 0; i < COUNTRIES_COUNT; i++) if (!strcmp(countries[i], countrySelected)) verifier = 1;
-    
-    if (verifier){
+    for (i = 0; i < COUNTRIES_COUNT; i++)
+        if (!strcmp(countries[i], countrySelected))
+            verifier = 1;
+
+    if (verifier)
+    {
         // if true, run function and print proper output
         // execute the function
         questionFiv(category, countrySelected, noGlobal, countries, &fivOutput);
@@ -1241,7 +1249,8 @@ int main()
         printf("\nPosition: %d", fivOutput);
         printf("\033[0m");
     }
-    else{
+    else
+    {
         // if not, then print error message
         printf("\n=====\nOutput of QUESTION 5.\n=====\n\033[1;33m");
         printf("ERROR: Country name `%s` is not found in the list of countries in the SoGA dataset.", countrySelected);
