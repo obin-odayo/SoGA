@@ -498,7 +498,7 @@ void questionFor(String country, int category, double SOGA[][SOGA_COUNT / COUNTR
     // use filterCat
     double dataCat[COUNTRIES_COUNT];
     double sorted[COUNTRIES_COUNT];
-    double key;
+    double key = -1.0; 
     int i, j, min; // used for selection sort
 
     filterCat(SOGA, dataCat, category);
@@ -1084,12 +1084,16 @@ int main()
 
     /* Variables for Question 4*/
     String countrySelected, above, below;
-    double forOutput[3]; // note that forOutput[0] is the value before the countrySelected
-                         // and forOutput[2] is the value after.
-                         // forOutput[1] is the value at the index
+    int verifier = 0; // initialize as 0
+                      // assume that countrySelected is not in countries[]
+                      // verifier is used again for questionFiv
+    double forOutput [3]; // note that forOutput[0] is the value before the countrySelected
+                          // and forOutput[2] is the value after.
+                          // forOutput[1] is the value at the index
 
     /* Variables for Question 5*/
     int fivOutput;
+
 
     // call removeGBL function to make an array without the global data values
     removeGbl(SOGA, noGlobal);
@@ -1160,7 +1164,7 @@ int main()
     // execute the function
     questionTri(num, category, noGlobal, countries, triOutput);
     // print the result of the function
-    printf("\n=====\nOutput of QUSESTION 3.\n=====\n\033[1;33m");
+    printf("\n=====\nOutput of QUESTION 3.\n=====\n\033[1;33m");
     printf("%s", triOutput);
     printf("\033[0m");
 
@@ -1178,28 +1182,42 @@ int main()
     printf("What category do you want to use?\n>. (int) ");
     scanf("%d", &category);
 
-    // execute the function
-    questionFor(countrySelected, category, noGlobal, countries, forOutput);
+    // check if countrySelected is in the list of countries
+    // if so then change verifier to true (or 1)
+    for (i = 0; i < COUNTRIES_COUNT; i++) if (!strcmp(countrySelected, countries[i])) verifier = 1;
+    
+    // If countryName is in countries[] then execute and print result of the function
+    // If not then print error message
+    if (verifier){
+        questionFor(countrySelected, category, noGlobal, countries, forOutput);
+    
+        // determine the country names above and below the country
+        for (i = 0; i< COUNTRIES_COUNT; i++){
+            if (noGlobal[i][category] == forOutput[0])
+                strcpy(above, countries[i]);
 
-    // determine the country names above and below the country
-    for (i = 0; i< COUNTRIES_COUNT; i++)
-        if (noGlobal[i][category] == forOutput[0])
-            strcpy(above, countries[i]);
+            if (noGlobal[i][category] == forOutput[2])
+                strcpy(below, countries[i]);
+        }
 
-    for (i = 0; i< COUNTRIES_COUNT; i++)
-        if (noGlobal[i][category] == forOutput[2])
-            strcpy(below, countries[i]);
-
-    // print the result of the function
-    printf("\n=====\nOutput of QUESTION 4.\n=====\n\033[1;33m");
-    printf("\nAbove: %s, %.5lf", above, forOutput[0]);
-    printf("\n%s: %.5lf", countrySelected, forOutput[1]);
-    printf("\nBelow: %s, %.5lf", below, forOutput[2]);
-    printf("\033[0m");
-
+        printf("\n=====\nOutput of QUESTION 4.\n=====\n\033[1;33m");
+        printf("\nAbove: %s, %.5lf", above, forOutput[0]);
+        printf("\n%s: %.5lf", countrySelected, forOutput[1]);
+        printf("\nBelow: %s, %.5lf", below, forOutput[2]);
+        printf("\033[0m");
+    } 
+    else{
+        printf("\n=====\nOutput of QUESTION 4.\n=====\n\033[1;33m");
+        printf("ERROR: Country name `%s` is not found in the list of countries in the SoGA dataset.", countrySelected);
+        printf("\033[0m");
+    }
+    
     // ================
     // ===== QUESTION 5
     // ================
+
+    // reset verifier variable to -1..
+    verifier = 0;
 
     printf("\n\n=====\nQUESTION 5.\n=====\033[1;33m\nIn `category`, what is the position of `country`'s data value if is sorted in increasing order?\n\033[0m\n\n");
     printf("What country do you want?\nInstructions, case sensitive and replace spaces and underscores\n>. (string) ");
@@ -1210,13 +1228,26 @@ int main()
     printf("What category do you want to use?\n>. (int) ");
     scanf("%d", &category);
 
-    // execute the function
-    questionFiv(category, countrySelected, noGlobal, countries, &fivOutput);
+    // check again if countrySelected is found in the SoGA set
+    for (i = 0; i < COUNTRIES_COUNT; i++) if (!strcmp(countries[i], countrySelected)) verifier = 1;
+    
+    if (verifier){
+        // if true, run function and print proper output
+        // execute the function
+        questionFiv(category, countrySelected, noGlobal, countries, &fivOutput);
 
-    // print the result of the function
-    printf("\n=====\nOutput of QUESTION 5.\n=====\n\033[1;33m");
-    printf("\nPosition: %d", fivOutput);
-    printf("\033[0m");
+        // print the result of the function
+        printf("\n=====\nOutput of QUESTION 5.\n=====\n\033[1;33m");
+        printf("\nPosition: %d", fivOutput);
+        printf("\033[0m");
+    }
+    else{
+        // if not, then print error message
+        printf("\n=====\nOutput of QUESTION 5.\n=====\n\033[1;33m");
+        printf("ERROR: Country name `%s` is not found in the list of countries in the SoGA dataset.", countrySelected);
+        printf("\033[0m");
+    }
+
     /*
        Call the function that answers a question. Thereafter, use printf() to print the question
        and the corresponding answer.  For example:
