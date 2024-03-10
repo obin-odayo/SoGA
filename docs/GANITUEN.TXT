@@ -47,7 +47,7 @@ A3: (let: num = 5, category = Dietary)
     India
 
 A4: (let: country = Mozambique, category = Baseline Life Expectancy)
-    Above: Somalia, 58.58.46516
+    Above: Somalia, 58.46516
     Mozambique: 58.38278
     Below: Eswatini, 58.18399
 
