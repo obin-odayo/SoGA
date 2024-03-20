@@ -1,0 +1,189 @@
+==========
+QUESTION 1.
+==========
+What are the names and values of the top `num` countries with the highest `category`?
+
+How many countries do you want to print?
+>. (int) 
+
+---
+0: Baseline Life Expectancy
+1: Air Pollution
+2: Ambient PM
+3: Ozone
+4: Household AP
+5: Environmental Occupational Hazard
+6: Occupational Hazard
+7: Unsafe Hand Washing
+8: Metabolic Syndrome
+9: Deitary
+10: High Fasting Plasma Glucose/Sugar
+11: Tobacco
+12: Smoking
+13: Secondhand Smoke
+14: Unsafe Sex
+---
+
+What category do you want to use?
+>. (int) 
+
+====================
+Output of QUESTION 1.
+
+1. Nepal: 0.33347
+2. India: 0.20612
+3. Bhutan: 0.16526
+4. North_Korea: 0.16457
+5. Bangladesh: 0.13355
+
+==========
+QUESTION 2.
+==========
+What are the number of countries, minimum, maximum, and average values for `category`
+
+---
+0: Baseline Life Expectancy
+1: Air Pollution
+2: Ambient PM
+3: Ozone
+4: Household AP
+5: Environmental Occupational Hazard
+6: Occupational Hazard
+7: Unsafe Hand Washing
+8: Metabolic Syndrome
+9: Deitary
+10: High Fasting Plasma Glucose/Sugar
+11: Tobacco
+12: Smoking
+13: Secondhand Smoke
+14: Unsafe Sex
+---
+
+What category do you want to use?
+>. (int) 
+
+====================
+Output of QUESTION 2.
+
+Count: 202
+Min: 0.00000269
+Max: 0.33346898
+Avg: 0.02366958
+
+==========
+QUESTION 3.
+==========
+Given the last `num` countries below the average for `category`. What country is the median in that set?
+
+How many countries?
+>. (int) 
+
+---
+0: Baseline Life Expectancy
+1: Air Pollution
+2: Ambient PM
+3: Ozone
+4: Household AP
+5: Environmental Occupational Hazard
+6: Occupational Hazard
+7: Unsafe Hand Washing
+8: Metabolic Syndrome
+9: Deitary
+10: High Fasting Plasma Glucose/Sugar
+11: Tobacco
+12: Smoking
+13: Secondhand Smoke
+14: Unsafe Sex
+---
+
+What category do you want to use?
+>. (int) 
+
+====================
+Output of QUESTION 3.
+
+India
+
+==========
+QUESTION 4.
+==========
+Given the data sorted in descending order for `category` what are the countries above and below the data of `country`.
+
+What country do you want?
+Instructions, case sensitive and replace spaces and underscores
+>. (string) 
+
+---
+0: Baseline Life Expectancy
+1: Air Pollution
+2: Ambient PM
+3: Ozone
+4: Household AP
+5: Environmental Occupational Hazard
+6: Occupational Hazard
+7: Unsafe Hand Washing
+8: Metabolic Syndrome
+9: Deitary
+10: High Fasting Plasma Glucose/Sugar
+11: Tobacco
+12: Smoking
+13: Secondhand Smoke
+14: Unsafe Sex
+---
+
+What category do you want to use?
+>. (int) 
+
+====================
+Output of QUESTION 4.
+
+Above: Somalia, 58.46516
+Mozambique: 58.38278
+Below: Eswatini, 58.18400
+
+==========
+QUESTION 5.
+==========
+In `category`, what is the position of `country`'s data value if is sorted in increasing order?
+
+What country do you want?
+Instructions, case sensitive and replace spaces and underscores
+>. (string) 
+
+---
+0: Baseline Life Expectancy
+1: Air Pollution
+2: Ambient PM
+3: Ozone
+4: Household AP
+5: Environmental Occupational Hazard
+6: Occupational Hazard
+7: Unsafe Hand Washing
+8: Metabolic Syndrome
+9: Deitary
+10: High Fasting Plasma Glucose/Sugar
+11: Tobacco
+12: Smoking
+13: Secondhand Smoke
+14: Unsafe Sex
+---
+
+What category do you want to use?
+>. (int) 
+
+====================
+Output of QUESTION 5.
+
+Position: 188
+
+
+
+================END OF PROGRAM==================
+	Name: GANITUEN, Zhean Robby L.
+	ID Number: 12346411
+
+	Course and Section: CCPROG2, S11B
+	Professor: Mr. Florante Slavador
+
+	Created on: January 29, 2024
+	Last Updated: March 3, 2024
