@@ -1,0 +1,131 @@
+==========QUESTION 1==========
+Which risk factor reduces the baseline life expectancy the most for <parameter_territory_name>? What is its value?
+
+
+Let <parameter_territory_name> == Jamaica
+
+A1: <Jamaica> - Metabolic Syndrome (7.484688)
+
+==========QUESTION 2==========
+What are the territories that have a risk factor value higher than <parameter_number_years> for Air Pollution in alphabetical order? Identify the index of <parameter_territory_name> if it is in the list; otherwise, return an invalid statement.
+
+
+Let <parameter_number_years> == 1.500000
+Let <parameter_territory_name> == Bangladesh
+
+A2: Territory Found
+Afghanistan
+Bangladesh
+Benin
+Bhutan
+Burkina_Faso
+Burundi
+Cabo_Verde
+Cambodia
+Cameroon
+Central_African_Republic
+Chad
+China
+Comoros
+Congo
+Congo-Kinshasa
+Djibouti
+Egypt
+Eritrea
+Ethiopia
+Gambia
+Ghana
+Global
+Guinea
+Guinea-Bissau
+Haiti
+India
+Iraq
+Kenya
+Kiribati
+Kuwait
+Kyrgyzstan
+Laos
+Liberia
+Madagascar
+Malawi
+Mali
+Mauritania
+Mongolia
+Morocco
+Mozambique
+Myanmar
+Nepal
+Niger
+Nigeria
+North_Korea
+Oman
+Pakistan
+Papua_New_Guinea
+Philippines
+Rwanda
+Samoa
+Sao_Tome_and_Principe
+Saudi_Arabia
+Senegal
+Sierra_Leone
+Solomon_Islands
+Somalia
+South_Sudan
+Sudan
+Tajikistan
+Tanzania
+Timor-Leste
+Togo
+Turkmenistan
+Uganda
+Uzbekistan
+Vanuatu
+Yemen
+Zambia
+Zimbabwe
+
+Bangladesh (pos: 2)
+
+==========QUESTION 3==========
+Which top <parameter_number_territories> territories have the highest risk factor values for <parameter_risk_factor> in descending order?
+
+
+Let parameter_number_territories == 10
+Let parameter_risk_factor == Dietary
+
+A3:
+Turkmenistan
+Belarus
+Kyrgyzstan
+Uzbekistan
+Ukraine
+Mongolia
+Tajikistan
+Bulgaria
+Moldova
+Slovakia
+
+==========QUESTION 4==========
+What is the average risk factor value of <parameter_risk_factor>?
+
+
+Let <parameter_risk_factor> == Unsafe Sex
+
+A4: Unsafe Sex (0.534931)
+
+==========QUESTION 5==========
+Which risk factor has the lowest total sum value? What is its value?
+
+A5: Ozone (4.781255)
+
+
+==================== END OF CODE
+CCPROG2 Machine Project Part 2
+Name: Zhean Robby L. Ganituen (12346411)
+Instructor: Mr. Florante Salvador
+Date Created: March 19, 2024
+Last Updated: March 21, 2024
+==================== END OF CODE
+
+

@@ -38,19 +38,19 @@
           each risk factor as a structure member explicitly).
        / b. Use the typedef alias (that you declared in your header file) for a 1D array of struct to
           represent and store ALL rows of the SoGA data values read from the SoGA_DATASET.txt file.
-       c. Use the typedef alias as well to specify all struct or struct pointer
+       / c. Use the typedef alias as well to specify all struct or struct pointer
           variables/pointers/parameters/function return type that you need in your function definitions.
        d. At least one function definition should use a dereference operator (denoted by an asterisk
           symbol *) together with a structure member access operator (denoted by a dot symbol . )
           to access a structure member indirectly via a structure pointer variable.
-       e. At least one other function definition should use a structure pointer operator ([i].) to
+       / e. At least one other function definition should use a structure pointer operator ([i].) to
           access a structure member indirectly via a structure pointer variable.
-    2. Document your codes with SENSIBLE comments.
-    3. Use double data type (not float) for all floating point values/variables/functions/return type.
-    4. Do NOT use any global variables.
-    5. Do NOT call printf() except inside the main() function.
-    6. Do NOT use file processing functions such as fopen(), fclose(), etc.
-   7. Do NOT use library functions that were NOT discussed in our class.
+    / 2. Document your codes with SENSIBLE comments.
+    / 3. Use double data type (not float) for all floating point values/variables/functions/return type.
+    / 4. Do NOT use any global variables.
+    / 5. Do NOT call printf() except inside the main() function.
+    / 6. Do NOT use file processing functions such as fopen(), fclose(), etc.
+   / 7. Do NOT use library functions that were NOT discussed in our class.
 */
 
 /*
@@ -308,12 +308,15 @@ void questionOne(data countries[], LongString countryName, double *output, Strin
    - pos [int] : position of name in output[]
    - -1 if name is not in output
 */
-int questionTwo(data countries[], LongString name, LongString output[], double num, int *index)
+int questionTwo(data *countries[], LongString name, LongString output[], double num, int *index)
 {
    /*
    THIS QUESTION WILL USE:
       BINARY SEARCH
       SELECTION SORT
+
+   I ALSO SHOWED HOW TO USE dereference operator on structure pointer
+   AND arrow operator on structure pointer
 
    Algorithm for implementation
    1. Determine what countries to include in the output array
@@ -329,9 +332,9 @@ int questionTwo(data countries[], LongString name, LongString output[], double n
    for (int i = 0; i < COUNTRIES_COUNT; i++)
    {
       // check if the ith coutry's data value for AIR is > num
-      if (countries[i].AIR > num)
+      if ((*countries)[i].AIR > num)
       {
-         strcpy(output[*index], countries[i].name); // copy name of country
+         strcpy(output[*index], countries[i]->name); // copy name of country
          (*index)++;                                // increment index
       }
    }
@@ -756,12 +759,17 @@ int main()
    */
 
    data SOGA[COUNTRIES_COUNT];
+   data *ptr[COUNTRIES_COUNT];
 
    // read SOGA SOGA.txt
    for (int i = 0; i < COUNTRIES_COUNT; i++)
    {
       scanf(" %s %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf ", SOGA[i].name, &(SOGA[i].BLE), &(SOGA[i].AIR), &(SOGA[i].APM), &(SOGA[i].OZN), &(SOGA[i].HAP), &(SOGA[i].EOH), &(SOGA[i].OCC), &(SOGA[i].UHW), &(SOGA[i].MTB), &(SOGA[i].DTY), &(SOGA[i].HFP), &(SOGA[i].TBC), &(SOGA[i].SMK), &(SOGA[i].SSK), &(SOGA[i].SEX));
+      
+      // instantiate *ptr = SOGA
+      ptr[i] = &SOGA[i];
    }
+
 
    // =================== QUESTION ONE
    double Q1_out1 = 0; // initialize as 0, assume that countryName is not found
@@ -795,13 +803,14 @@ int main()
    double Q2_num = 1.5;
    int Q2_idx;
 
-   printf("\n==========QUESTION 2==========\n");
+   printf("\n\n==========QUESTION 2==========\n");
    printf("What are the territories that have a risk factor value higher than <parameter_number_years> for Air Pollution in alphabetical order? Identify the index of <parameter_territory_name> if it is in the list; otherwise, return an invalid statement.\n\n\n");
 
    printf("Let <parameter_number_years> == %lf\n", Q2_num);
    printf("Let <parameter_territory_name> == %s\n", Q2_name);
 
-   int Q2_checker = questionTwo(SOGA, Q2_name, Q2_out, Q2_num, &Q2_idx);
+   // + 1 this because counting starts at 0
+   int Q2_checker = questionTwo(ptr, Q2_name, Q2_out, Q2_num, &Q2_idx) + 1;
 
    if (Q2_checker == -1)
    {
@@ -821,7 +830,7 @@ int main()
    }
 
    // =================== QUESTION Three
-   printf("\n\n==========QUESTION 3==========\n");
+   printf("\n==========QUESTION 3==========\n");
    printf("Which top <parameter_number_territories> territories have the highest risk factor values for <parameter_risk_factor> in descending order?\n\n\n");
    String Q3_out[COUNTRIES_COUNT];
    int Q3_num = 10;           // question parameter for number of countries to include
