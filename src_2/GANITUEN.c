@@ -92,7 +92,7 @@
    - mid, if [name] is found
    - -1, if not found
 */
-int binSearch(String countries[], int size, String name)
+int binSearch(LongString countries[], int size, String name)
 {
    int low = 0;
    int mid;
@@ -108,8 +108,6 @@ int binSearch(String countries[], int size, String name)
          high = mid + 1;
       else
          low = mid - 1;
-
-      printf("\nDEBUG: %s\n", countries[mid]);
    }
 
    return -1; // not found
@@ -124,7 +122,7 @@ int binSearch(String countries[], int size, String name)
 
    @returns: none
 */
-void selSortString(String arr[], int size)
+void selSortString(LongString arr[], int size)
 {
    for (int i = 0; i < size - 1; i++)
    {
@@ -301,72 +299,52 @@ void questionOne(data countries[], LongString countryName, double *output, Strin
 
    @params
    - countries[] [struct data] : an array of the SOGA data variables.
+   - num [int] : the value that we use to check of the data value is greater than this or not.
    - name [String (char[32])] : the country name that the user chose.
    - output[] [String (char[32])] : the list of countries that will be used for the output
-   - index [int] : the position of the selected country in output[]
+   - index [*int] : the total number of elements in output[]
+
+   @returns:
+   - pos [int] : position of name in output[]
+   - -1 if name is not in output
 */
-// void questionTwo(data countries[], String name, String output[], int *index, int *num){
-//    /*
-//    THIS QUESTION WILL USE:
-//       SEARCH
-//       SELECTION SORT
+int questionTwo(data countries[], LongString name, LongString output[], double num, int *index)
+{
+   /*
+   THIS QUESTION WILL USE:
+      BINARY SEARCH
+      SELECTION SORT
 
-//    Algorithm for implementation
-//    1. Search if the user selected country exists in the list (bin search)
-//    2. Get the countries that have a Air Pollution than selected
-//       2.1 Add these to output[]
-//    3. Sort the elements of output[] (sel sort)
-//    4. Determine the index of selected country in output[]
-//    */
+   Algorithm for implementation
+   1. Determine what countries to include in the output array
+   2. Selection sort output in alphabetical order
+   3. Use binary search to check what the
+   */
 
-//    int found = -1;
+   // NOTE! the category here is constant
+   // Air Pollution is that constant category
+   *index = 0; // init as 0
 
-//    // PART 1. find selected inthe list of countries
-//    for (int index = 0; index < COUNTRIES_COUNT; index++)
-//    {
-//       if (!strcmp(name, countries[index].name))
-//       {
-//          found = 1;
-//          break;
-//       }
-//    }
+   // PART 1
+   for (int i = 0; i < COUNTRIES_COUNT; i++)
+   {
+      // check if the ith coutry's data value for AIR is > num
+      if (countries[i].AIR > num)
+      {
+         strcpy(output[*index], countries[i].name); // copy name of country
+         (*index)++;                                // increment index
+      }
+   }
 
-//    // do this so we wont waste time running the code if it isn't found
-//    // in the first place
-//    if (found == -1){
-//       *index = -1; // index not found!
-//    }
-//    else {
-//       // PART 2.
-//       // get the Air Pollution value for country selected
-//       int AP = countries[found].AIR;
-//       *num = 0; // counts how many elements are in the array, initialize as 0
+   // PART 2. SELECTION SORT
+   selSortString(output, *index);
 
-//       // set the first element of output be the selected country
-//       // then increment num
-//       strcpy(output[*num], countries[found].name);
-//       (*num)++;
+   // PART 3. BIN SEARCH
 
-//       // iterate through the countries in the SOGA
-//       // compare if the value of the country for AP is >country selected
-//       for (int i = 0; i < COUNTRIES_COUNT; i++){
-//          if(AP < countries[i].AIR){
-//             strcpy(output[*num], countries[i].name);
-//             (*num)++;
-//          }
-//       }
-
-//       // PART 3. SELECTION SORT
-//       selSort(output, *num);
-
-//       // PART 4.
-//       // find what the index of country selected is in output
-//       for (int i = 0; i < *num; i++){
-//          if(!strcmp(output[i], name)) *index = i;
-//          break;
-//       }
-//    }
-// }
+   // remark bin search will return pos number if it found it
+   // else it will return -1
+   return binSearch(output, *index, name);
+}
 
 /* questionTri
 
@@ -492,7 +470,7 @@ int questionTri(data *countries, String outputNames[], int num, String category)
 
    // then, selection sort output array
    selSortDouble(output, COUNTRIES_COUNT, 0);
-   
+
    // DEBUGGING
    // for (i = 0; i < COUNTRIES_COUNT; i++){
    //    printf(".. %lf\n", unsorted[i]);
@@ -507,7 +485,7 @@ int questionTri(data *countries, String outputNames[], int num, String category)
          // check nList[i] is equal to the unsorted[j]
          // then put the jth name data countries in outputNames
          if (output[i] == unsorted[j])
-         {  
+         {
             // j+1 because we need to pad the "Global" row in SOGA dataset
             strcpy(outputNames[i], countries[j + 1].name);
             break;
@@ -812,30 +790,35 @@ int main()
    }
 
    // =================== QUESTION TWO
-   /*String Q2_name;
-   String Q2_out[COUNTRIES_COUNT];
-   int Q2_num, Q2_idx;
+   LongString Q2_name = "Bangladesh";
+   LongString Q2_out[COUNTRIES_COUNT];
+   double Q2_num = 1.5;
+   int Q2_idx;
 
+   printf("\n==========QUESTION 2==========\n");
+   printf("What are the territories that have a risk factor value higher than <parameter_number_years> for Air Pollution in alphabetical order? Identify the index of <parameter_territory_name> if it is in the list; otherwise, return an invalid statement.\n\n\n");
 
-   printf("\n\n==========QUESTION 2==========\n");
+   printf("Let <parameter_number_years> == %lf\n", Q2_num);
+   printf("Let <parameter_territory_name> == %s\n", Q2_name);
 
-   printf("What are the territories that have a risk factor value higher than <parameter_number_years> for Air Pollution in alphabetical order? Identify the index of <parameter_territory_name> if it is in the list; otherwise, return an invalid statement.\n\n\n");*/
+   int Q2_checker = questionTwo(SOGA, Q2_name, Q2_out, Q2_num, &Q2_idx);
 
-   // printf("What territory/country name do you want to use?\n>. (string) ");
-   // scanf(" %s", Q2_name); // remember no & for strings!
+   if (Q2_checker == -1)
+   {
+      printf("\nERROR: country name [%s] not found in the question output!\n", Q2_name);
+   }
+   else
+   {
+      printf("\nA2: Territory Found\n");
+      // print the list of countries
+      for (int i = 0; i < Q2_idx; i++)
+      {
+         printf("%s\n", Q2_out[i]);
+      }
+      printf("\n");
 
-   // questionTwo(countries,Q2_name, Q2_out, &Q2_num, &Q2_idx);
-
-   // if (Q2_idx == -1){
-   //    printf("\nERROR: country name [%s] not found in SOGA dataset!\n", Q2_name);
-   // } else{
-   //    printf("\nA2: <%d>\n", Q2_idx);
-   //    // print the list of countries
-   //    for (int i = 0; i < Q2_num; i++){
-   //       printf("%s\n", Q2_out[i]);
-   //    }
-   //    printf("\n");
-   // }
+      printf("%s (pos: %d)\n", Q2_name, Q2_checker);
+   }
 
    // =================== QUESTION Three
    printf("\n\n==========QUESTION 3==========\n");
@@ -861,7 +844,7 @@ int main()
    }
 
    // =================== QUESTION FOUR
-   printf("\n\n==========QUESTION 4==========\n");
+   printf("\n==========QUESTION 4==========\n");
 
    String Q4_cat = "Unsafe Sex";
    double Q4_out = questionFor(SOGA, Q4_cat);
@@ -884,5 +867,6 @@ int main()
 
    printf("A5: %s (%lf)", Q5_cat, Q5_out);
 
+   printf("\n\n\n==================== END OF CODE\nCCPROG2 Machine Project Part 2\nName: Zhean Robby L. Ganituen (12346411)\nInstructor: Mr. Florante Salvador\nDate Created: March 19, 2024\nLast Updated: March 21, 2024\n==================== END OF CODE\n\n\n");
    return 0;
 }
