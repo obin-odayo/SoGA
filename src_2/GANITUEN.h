@@ -36,6 +36,7 @@
 #define SOGA_COUNT 3045
 
 typedef char String[32];
+typedef char LongString[64]; // used in questionFor
 
 /* data [structure]
     - stores the data values of a country

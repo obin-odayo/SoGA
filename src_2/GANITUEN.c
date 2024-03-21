@@ -152,19 +152,30 @@ void selSortString(String arr[], int size)
    @params:
    - arr [String (char[32])] : array of strings to be sorted
    - size [int] : size of arr
+   - arrangement [int]: 1 ascending order, 0 descending order
 
    @returns: none
 */
-void selSortDouble(double arr[], int size)
+void selSortDouble(double arr[], int size, int arrangement)
 {
    for (int i = 0; i < size - 1; i++)
    {
       int min = i;
       for (int j = i + 1; j < size; j++)
       {
-         if (arr[j] < arr[min])
+         if (arrangement)
          {
-            min = j;
+            if (arr[j] < arr[min])
+            {
+               min = j;
+            }
+         }
+         else
+         {
+            if (arr[j] > arr[min])
+            {
+               min = j;
+            }
          }
       }
       if (min != i)
@@ -185,7 +196,7 @@ void selSortDouble(double arr[], int size)
    - countryName [String (char[32])] : the country name that the user chose
    - output [double *] : pointer that will store the result
 */
-void questionOne(data countries[], String countryName, double *output, String category)
+void questionOne(data countries[], LongString countryName, double *output, String category)
 {
    /*
       THIS SECTION USES LINEAR SEARCH!
@@ -357,6 +368,156 @@ void questionOne(data countries[], String countryName, double *output, String ca
 //    }
 // }
 
+/* questionTri
+
+   @params:
+   - countries [struct data] : SOGA dataset
+   - outputNames[] [String (char[32])] : the array that will be the result of this question
+   - num [int] : the number of countries to include in outputNames
+   - category [String (char[32])] : the category of the question
+
+   @return
+   - 1, if category is found
+   - -1, if category is not found
+
+
+*/
+int questionTri(data *countries, String outputNames[], int num, String category)
+{
+   // THIS USES SELECTION SORT
+
+   // subtract countries_count by 1 to not include global
+   double output[COUNTRIES_COUNT - 1];   // this will store the array of selSort
+   double unsorted[COUNTRIES_COUNT - 1]; // store unsorted array
+   int index = -1;                       // initialize this as -1
+   int checker = 0;
+   int i, j;
+
+   // Determine which category is used
+   // List for categories
+   LongString catList[15] = {
+       "Baseline Life Expectancy",
+       "Air Pollution",
+       "Ambient PM",
+       "Ozone",
+       "Household AP",
+       "Environmental Occupational Hazard",
+       "Occupational Hazard",
+       "Unsafe Handwashing",
+       "Metabolic Syndrome",
+       "Dietary",
+       "High Fasting Plasma Glucose / Sugar",
+       "Tobacco",
+       "Smoking",
+       "Secondhand Smoke",
+       "Unsafe Sex"};
+   for (index = 0; index < 15; index++)
+   {
+      if (!strcmp(category, catList[index]))
+      {
+         checker = 1;
+         break;
+      }
+   }
+   if (checker == 0)
+      return 0;
+
+   switch (index)
+   {
+   case 0: // BLE - Baseline Life Expectancy
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].BLE;
+      break;
+   case 1: // AIR - Air Pollution
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].AIR;
+      break;
+   case 2: // APM - Ambient PM
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].APM;
+      break;
+   case 3: // OZN - Ozone
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].OZN;
+      break;
+   case 4: // HAP - Household AP
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].HAP;
+      break;
+   case 5: // EOH - Environmental Occupational Hazard
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].EOH;
+      break;
+   case 6: // OCC - Occupational Hazard
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].OCC;
+      break;
+   case 7: // UHW - Unsafe Handwashing
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].UHW;
+      break;
+   case 8: // MTB - Metabolic Syndrome
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].MTB;
+      break;
+   case 9: // DTY - Dietary
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].DTY;
+      break;
+   case 10: // HFP - High Fasting Plasma Glucose / Sugar
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].HFP;
+      break;
+   case 11: // TBC - Tobaccco
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].TBC;
+      break;
+   case 12: // SMK - Smoking
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].SMK;
+      break;
+   case 13: // SSK - Secondhand Smoke
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].SSK;
+      break;
+   case 14: // SEX - Unsafe Sex
+      for (i = 1; i < COUNTRIES_COUNT; i++)
+         output[i - 1] = countries[i].SEX;
+      break;
+   }
+
+   // store the original array in unsorted[]
+   for (i = 0; i < COUNTRIES_COUNT - 1; i++)
+      unsorted[i] = output[i];
+
+   // then, selection sort output array
+   selSortDouble(output, COUNTRIES_COUNT, 0);
+   
+   // DEBUGGING
+   // for (i = 0; i < COUNTRIES_COUNT; i++){
+   //    printf(".. %lf\n", unsorted[i]);
+   // }
+
+   // get the top num entries in output
+   // determine the names of the countries of data values stores in output[i]
+   for (i = 0; i < num; i++)
+   {
+      for (j = 0; j < COUNTRIES_COUNT - 1; j++)
+      {
+         // check nList[i] is equal to the unsorted[j]
+         // then put the jth name data countries in outputNames
+         if (output[i] == unsorted[j])
+         {  
+            // j+1 because we need to pad the "Global" row in SOGA dataset
+            strcpy(outputNames[i], countries[j + 1].name);
+            break;
+         }
+      }
+   }
+
+   return 1;
+}
+
 /* questionFor
 
    @params:
@@ -366,16 +527,107 @@ void questionOne(data countries[], String countryName, double *output, String ca
    @returns
    - average of data values for the category
 */
-questionFor(data *countries, String category)
+double questionFor(data *countries, String category)
 {
    /*
    1. Verify if the category in SOGA dataset
    */
 
-   // recall there are 14 categories
-   for (int i = 0; i < 14; i++)
+   LongString catList[15] = {
+       "Baseline Life Expectancy",
+       "Air Pollution",
+       "Ambient PM",
+       "Ozone",
+       "Household AP",
+       "Environmental Occupational Hazard",
+       "Occupational Hazard",
+       "Unsafe Handwashing",
+       "Metabolic Syndrome",
+       "Dietary",
+       "High Fasting Plasma Glucose / Sugar",
+       "Tobacco",
+       "Smoking",
+       "Secondhand Smoke",
+       "Unsafe Sex"};
+   double output = 0; // init as 0 for "+=" operator
+   int index;
+   // determine if category exists
+   for (index = 0; index < COUNTRIES_COUNT; index++)
    {
+      if (!strcmp(category, catList[index]))
+         break;
    }
+
+   switch (index)
+   {
+   case 0: // BLE - Baseline Life Expectancy
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].BLE;
+      break;
+   case 1: // AIR - Air Pollution
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].AIR;
+      break;
+   case 2: // APM - Ambient PM
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].APM;
+      break;
+   case 3: // OZN - Ozone
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].OZN;
+      break;
+   case 4: // HAP - Household AP
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].HAP;
+      break;
+   case 5: // EOH - Environmental Occupational Hazard
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].EOH;
+      break;
+   case 6: // OCC - Occupational Hazard
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].OCC;
+      break;
+   case 7: // UHW - Unsafe Handwashing
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].UHW;
+      break;
+   case 8: // MTB - Metabolic Syndrome
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].MTB;
+      break;
+   case 9: // DTY - Dietary
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].DTY;
+      break;
+   case 10: // HFP - High Fasting Plasma Glucose / Sugar
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].HFP;
+      break;
+   case 11: // TBC - Tobaccco
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].TBC;
+      break;
+   case 12: // SMK - Smoking
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].SMK;
+      break;
+   case 13: // SSK - Secondhand Smoke
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].SSK;
+      break;
+   case 14: // SEX - Unsafe Sex
+      for (int i = 0; i < COUNTRIES_COUNT; i++)
+         output += countries[i].SEX;
+      break;
+   default:
+      output = -1.0; // Return -1 if default runs
+   }
+
+   // get the average of the sum
+   output /= COUNTRIES_COUNT;
+
+   return output;
 }
 
 /* questionFiv
@@ -402,37 +654,44 @@ double questionFiv(data *countries, String category)
    // and so on...
 
    // Recall that the number of columns is the number of countries
-   for (int i = 0; i < COUNTRIES_COUNT; i++)
+   // start at china so countries[i]
+   for (int i = 1; i < COUNTRIES_COUNT; i++)
    {
       sums[0] += countries[i].BLE;
       sums[1] += countries[i].AIR;
-      sums[2] += countries[i].OZN;
-      sums[3] += countries[i].HAP;
-      sums[4] += countries[i].EOH;
-      sums[5] += countries[i].OCC;
-      sums[6] += countries[i].UHW;
-      sums[7] += countries[i].MTB;
-      sums[8] += countries[i].DTY;
-      sums[9] += countries[i].HFP;
-      sums[10] += countries[i].TBC;
-      sums[11] += countries[i].SMK;
-      sums[12] += countries[i].SSK;
-      sums[13] += countries[i].SEX;
+      sums[2] += countries[i].APM;
+      sums[3] += countries[i].OZN;
+      sums[4] += countries[i].HAP;
+      sums[5] += countries[i].EOH;
+      sums[6] += countries[i].OCC;
+      sums[7] += countries[i].UHW;
+      sums[8] += countries[i].MTB;
+      sums[9] += countries[i].DTY;
+      sums[10] += countries[i].HFP;
+      sums[11] += countries[i].TBC;
+      sums[12] += countries[i].SMK;
+      sums[13] += countries[i].SSK;
+      sums[14] += countries[i].SEX;
    }
 
    double min = sums[0];
    strcpy(category, "Baseline Life Expectancy");
 
+   // DEBUGGING: printf("%lf _ %lf\n", min, sums[1]);
    if (min > sums[1])
    {
       min = sums[1];
       strcpy(category, "Air Pollution");
    }
+
+   // DEBUGGING: printf("%lf _ %lf\n", min, sums[2]);
    if (min > sums[2])
    {
       min = sums[2];
       strcpy(category, "Ambient PM");
    }
+
+   // DEBUGGING: printf("%lf _ %lf\n", min, sums[3]);
    if (min > sums[3])
    {
       min = sums[3];
@@ -519,43 +778,38 @@ int main()
    */
 
    data SOGA[COUNTRIES_COUNT];
-   
+
    // read SOGA SOGA.txt
    for (int i = 0; i < COUNTRIES_COUNT; i++)
    {
-      scanf("%s %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf ", SOGA[i].name, SOGA[i].AIR, SOGA[i].APM, SOGA[i].OZN, SOGA[i].HAP, SOGA[i].EOH, SOGA[i].OCC, SOGA[i].UHW, SOGA[i].MTB, SOGA[i].DTY, SOGA[i].HFP, SOGA[i].TBC, SOGA[i].SMK, SOGA[i].SSK, SOGA[i].SEX);
+      scanf(" %s %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf ", SOGA[i].name, &(SOGA[i].BLE), &(SOGA[i].AIR), &(SOGA[i].APM), &(SOGA[i].OZN), &(SOGA[i].HAP), &(SOGA[i].EOH), &(SOGA[i].OCC), &(SOGA[i].UHW), &(SOGA[i].MTB), &(SOGA[i].DTY), &(SOGA[i].HFP), &(SOGA[i].TBC), &(SOGA[i].SMK), &(SOGA[i].SSK), &(SOGA[i].SEX));
    }
-   
-   printf("%s %lf", SOGA[0].name, SOGA[0].AIR);
-
-   // check if it's working
-   // printf("DEBUG .. %s -- %lf\n", countries[0].name, countries[0].BLE);
 
    // =================== QUESTION ONE
-   /*String Q1_name;
    double Q1_out1 = 0; // initialize as 0, assume that countryName is not found
-   String Q1_out2;      // category name output
+   String Q1_out2;     // category name output
+   LongString Q1_country = "Jamaica";
 
    printf("==========QUESTION 1==========\n");
 
    printf("Which risk factor reduces the baseline life expectancy the most for <parameter_territory_name>? What is its value?\n\n\n");
 
-   printf("What territory/country name do you want to use?\n>. (string) ");
-   scanf(" %s", Q1_name); // remember no & for strings!
+   printf("Let <parameter_territory_name> == %s\n", Q1_country);
 
    // call the function
-   questionOne(countries, Q1_name, &Q1_out1, Q1_out2);
+   questionOne(SOGA, Q1_country, &Q1_out1, Q1_out2);
 
    // if it is found, then run normal output
    if (Q1_out1)
    {
       // format A1: <countryName> - categoryName (value)
-      printf("\nA1: <%s> - %s (%lf)", Q1_name, Q1_out2, Q1_out1);
+      printf("\nA1: <%s> - %s (%lf)", Q1_country, Q1_out2, Q1_out1);
    }
    // if Q1_out1 is still 0, then country name is not found
-   else{
-      printf("\nERROR: country name [%s] not found in SOGA dataset!\n", Q1_name);
-   }*/
+   else
+   {
+      printf("\nERROR: country name [%s] not found in SOGA dataset!\n", Q1_country);
+   }
 
    // =================== QUESTION TWO
    /*String Q2_name;
@@ -583,13 +837,52 @@ int main()
    //    printf("\n");
    // }
 
-   // =================== QUESTION TWO
-   // printf("\n\n==========QUESTION 5==========\n");
-   // String Q5_cat;
-   // printf("Which risk factor has the lowest total sum value? What is its value?\n\n\n");
+   // =================== QUESTION Three
+   printf("\n\n==========QUESTION 3==========\n");
+   printf("Which top <parameter_number_territories> territories have the highest risk factor values for <parameter_risk_factor> in descending order?\n\n\n");
+   String Q3_out[COUNTRIES_COUNT];
+   int Q3_num = 10;           // question parameter for number of countries to include
+   String Q3_cat = "Dietary"; // question parameter for category
+   int Q3_checker = questionTri(SOGA, Q3_out, Q3_num, Q3_cat);
 
-   // double Q5_out = questionFiv(countries, Q5_cat);
+   printf("Let parameter_number_territories == %d\n", Q3_num);
+   printf("Let parameter_risk_factor == %s\n", Q3_cat);
 
-   // printf("\nA5: %s (%lf)", Q5_cat, Q5_out);
-   // return 0;
+   // if Q3_checker is not successful
+   if (!Q3_checker)
+      printf("\nERROR: category name [%s] not found in SOGA dataset!\n", Q3_cat);
+   else
+   {
+      printf("\nA3:\n");
+      for (int i = 0; i < Q3_num; i++)
+      {
+         printf("%s\n", Q3_out[i]);
+      }
+   }
+
+   // =================== QUESTION FOUR
+   printf("\n\n==========QUESTION 4==========\n");
+
+   String Q4_cat = "Unsafe Sex";
+   double Q4_out = questionFor(SOGA, Q4_cat);
+
+   printf("What is the average risk factor value of <parameter_risk_factor>?\n\n\n");
+   printf("Let <parameter_risk_factor> == %s\n", Q4_cat);
+
+   // check if Q4_out is -1, meaning the category is not found
+   if (Q4_out == 4)
+      printf("\nERROR: category name [%s] not found in SOGA dataset!\n", Q4_cat);
+   else
+      printf("\nA4: %s (%lf)", Q4_cat, Q4_out);
+
+   // =================== QUESTION FIVE
+   printf("\n\n==========QUESTION 5==========\n");
+   String Q5_cat;
+   printf("Which risk factor has the lowest total sum value? What is its value?\n\n");
+
+   double Q5_out = questionFiv(SOGA, Q5_cat);
+
+   printf("A5: %s (%lf)", Q5_cat, Q5_out);
+
+   return 0;
 }
