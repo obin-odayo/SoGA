@@ -8,7 +8,8 @@ Questions with parameter(s) should have the parameter(s) encoded in angled brack
 
 Q1: Which risk factor reduces the baseline life expectancy the most for <parameter_territory_name>? What is its value? [algorithm(s): Maximum, Linear Search]
 
-Q2: What are the territories that have a risk factor value higher than <parameter_number_years> for Air Pollution in alphabetical order? Identify the index of <parameter_territory_name> if it is in the list; otherwise, return an invalid statement. (Search Key for Binary Search: <parameter_territory_name>) [algorithm(s): Selection Sort, Binary Search]
+Q2: What are the territories that have a risk factor value higher than <parameter_number_years> for Air Pollution in alphabetical order? Identify the index of <parameter_territory_name> if it is in the list; otherwise, return an invalid statement. 
+(Search Key for Binary Search: <parameter_territory_name>) [algorithm(s): Selection Sort, Binary Search]
 
 Q3: Which top <parameter_number_territories> territories have the highest risk factor values for <parameter_risk_factor> in descending order? [algorithm(s): Selection Sort]
 
@@ -97,6 +98,7 @@ Zambia
 Zimbabwe
 
 <Bangladesh>
+
 2
 
 b.) Territory Not Found
